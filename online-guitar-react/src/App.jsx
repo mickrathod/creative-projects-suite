@@ -3,6 +3,7 @@ import { GuitarSynth, TUNINGS, CHORDS } from './audio/guitar-synth';
 import { Fretboard } from './components/Fretboard/Fretboard';
 import { ChordBar } from './components/Controls/ChordBar';
 import { ToneSelector } from './components/Controls/ToneSelector';
+import { SoundVisualizer } from './components/Common/SoundVisualizer';
 import { StartOverlay } from './components/Common/StartOverlay';
 import './App.css';
 
@@ -18,7 +19,10 @@ export function App() {
   const [toneMode, setToneMode] = useState('acoustic');
   const [strumDirection, setStrumDirection] = useState('down');
   const [activeChord, setActiveChord] = useState(null);
-  const [activePluckIndices, setActivePluckIndices] = useState([]);
+  const [selectedChord, setSelectedChord] = useState('G major');
+  const [activeFretPlucks, setActiveFretPlucks] = useState({});
+  const [showNoteNames, setShowNoteNames] = useState(true);
+  const [volume, setVolume] = useState(0.85);
 
   const currentStrings = TUNINGS[tuningKey].strings;
 
@@ -27,28 +31,56 @@ export function App() {
     setIsStarted(true);
   };
 
-  const handlePluckString = useCallback((index) => {
+  // Pluck a specific string at a specific fret
+  const handlePluckFret = useCallback((stringIdx, fret = 0) => {
     synth.ensureContext();
-    const str = currentStrings[index];
-    if (str) {
-      synth.pluckString(str.freq, index);
-    }
+    const str = currentStrings[stringIdx];
+    if (!str) return;
+
+    const freq = str.freq * Math.pow(2, fret / 12);
+    synth.pluckString(freq, stringIdx, 3.8);
+
+    setActiveFretPlucks((prev) => ({
+      ...prev,
+      [stringIdx]: fret
+    }));
+
+    setTimeout(() => {
+      setActiveFretPlucks((prev) => {
+        const next = { ...prev };
+        delete next[stringIdx];
+        return next;
+      });
+    }, 450);
   }, [synth, currentStrings]);
 
+  // Strum a chord
   const handleStrumChord = useCallback((chordName) => {
     synth.ensureContext();
     const fretOffsets = CHORDS[chordName];
     if (!fretOffsets) return;
 
     setActiveChord(chordName);
-    const plucked = synth.strumChord(fretOffsets, currentStrings, strumDirection);
-    setActivePluckIndices(plucked);
+    setSelectedChord(chordName);
+
+    const activeIndices = synth.strumChord(fretOffsets, currentStrings, strumDirection, 24);
+
+    // Light up frets on the fretboard
+    const plucks = {};
+    fretOffsets.forEach((fret, sIdx) => {
+      if (fret !== null) plucks[sIdx] = fret;
+    });
+    setActiveFretPlucks(plucks);
 
     setTimeout(() => {
       setActiveChord(null);
-      setActivePluckIndices([]);
-    }, 450);
+      setActiveFretPlucks({});
+    }, 550);
   }, [synth, currentStrings, strumDirection]);
+
+  const handleSelectChordFingering = (chordName) => {
+    setSelectedChord(chordName);
+  };
 
   const handleToneChange = (mode) => {
     setToneMode(mode);
@@ -63,17 +95,24 @@ export function App() {
     setStrumDirection((d) => (d === 'down' ? 'up' : 'down'));
   };
 
-  // Keyboard Shortcuts: Keys 1-6 for individual strings, chord shortcuts
+  const handleVolumeChange = (newVol) => {
+    setVolume(newVol);
+    synth.setVolume(newVol);
+  };
+
+  // Keyboard Shortcuts
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
 
       const key = e.key;
 
-      // 1-6 for strings
+      // 1-6 for strings (plucks the fretted note of currently selected chord)
       if (['1', '2', '3', '4', '5', '6'].includes(key)) {
         const idx = parseInt(key, 10) - 1;
-        handlePluckString(idx);
+        const frets = selectedChord ? CHORDS[selectedChord] : null;
+        const fret = frets && frets[idx] !== null ? frets[idx] : 0;
+        handlePluckFret(idx, fret);
       }
 
       // Chord shortcuts
@@ -83,26 +122,30 @@ export function App() {
       else if (upper === 'D') handleStrumChord('D major');
       else if (upper === 'G') handleStrumChord('G major');
       else if (upper === 'C') handleStrumChord('C major');
+      else if (upper === 'F') handleStrumChord('F major');
+      else if (upper === 'B') handleStrumChord('B major');
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handlePluckString, handleStrumChord]);
+  }, [handlePluckFret, handleStrumChord, selectedChord]);
+
+  const activeFingerings = selectedChord ? CHORDS[selectedChord] : null;
 
   return (
     <div className="guitar-app">
       {!isStarted && <StartOverlay onStart={handleStart} />}
 
       <header className="guitar-header">
-        <div className="badge">REACT 19 EDITION</div>
-        <h1 className="guitar-title">Online Guitar Pro</h1>
+        <div className="badge">AURASTRINGS PRO • KARPLUS-STRONG DSP</div>
+        <h1 className="guitar-title">AuraStrings Virtual Guitar</h1>
         <p className="guitar-subtitle">
-          Interactive physically modeled acoustic & electric guitar simulator
+          Studio-grade physical string modeling with interactive 12-fret neck & chord jammer
         </p>
       </header>
 
       <main className="guitar-main">
-        {/* Settings & Tone Selector */}
+        {/* Top Controls Strip: Tone, Tuning, Direction, Volume, Note Labels */}
         <ToneSelector
           toneMode={toneMode}
           onToneChange={handleToneChange}
@@ -110,28 +153,58 @@ export function App() {
           onTuningChange={handleTuningChange}
           strumDirection={strumDirection}
           onDirectionToggle={handleDirectionToggle}
+          showNoteNames={showNoteNames}
+          onToggleNoteNames={() => setShowNoteNames(!showNoteNames)}
+          volume={volume}
+          onVolumeChange={handleVolumeChange}
         />
 
-        {/* Fretboard Container */}
-        <div className="guitar-wrap">
+        {/* Guitar Body Housing */}
+        <div className="guitar-chassis">
+          {/* Top Chassis Bar with Visualizer */}
+          <div className="chassis-top-bar">
+            <div className="active-chord-indicator">
+              <span className="chord-indicator-label">ACTIVE CHORD VOICING</span>
+              <div className="chord-indicator-name">
+                {selectedChord || 'Free Fretboard'}
+              </div>
+            </div>
+
+            <SoundVisualizer synth={synth} />
+          </div>
+
+          {/* Fully Interactive 12-Fret Fretboard & Strumming Zone */}
           <Fretboard
             strings={currentStrings}
-            onPluckString={handlePluckString}
-            activePluckIndices={activePluckIndices}
+            onPluckFret={handlePluckFret}
+            activeFretPlucks={activeFretPlucks}
+            activeChordFingerings={activeFingerings}
+            showNoteNames={showNoteNames}
           />
 
-          {/* Chords Bar */}
+          {/* Categorized Chord Matrix & Rhythm Jam Progressions */}
           <ChordBar
             onStrumChord={handleStrumChord}
             activeChord={activeChord}
+            selectedChord={selectedChord}
+            onSelectChordFingering={handleSelectChordFingering}
           />
         </div>
 
-        {/* Keyboard Reference Footer */}
-        <footer className="footer-note">
-          <p>
-            Pluck strings by clicking or dragging across the fretboard. Press <kbd>1</kbd>&ndash;<kbd>6</kbd> for strings, or press <kbd>E</kbd>, <kbd>A</kbd>, <kbd>D</kbd>, <kbd>G</kbd>, <kbd>C</kbd> to strum major chords.
-          </p>
+        {/* Tactile Keyboard Guide */}
+        <footer className="footer-guide">
+          <div className="guide-item">
+            <kbd>1</kbd>&ndash;<kbd>6</kbd>
+            <span>Pluck Fretted Strings</span>
+          </div>
+          <div className="guide-item">
+            <kbd>C</kbd> <kbd>D</kbd> <kbd>E</kbd> <kbd>F</kbd> <kbd>G</kbd> <kbd>A</kbd> <kbd>B</kbd>
+            <span>Instant Major Chords</span>
+          </div>
+          <div className="guide-item">
+            <span className="tip-highlight">Fretboard Tip:</span>
+            <span>Click any fret on any string to play custom notes & solos!</span>
+          </div>
         </footer>
       </main>
     </div>

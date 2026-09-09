@@ -1,48 +1,81 @@
 /* ==========================================================================
-   Online Guitar Pro - React Edition Styling
+   AuraStrings Pro - Luxury Acoustic & Electric Guitar Styling
    ========================================================================== */
+
+:root {
+  --wood-dark: #1a0f08;
+  --wood-mid: #2b1a0e;
+  --wood-light: #4a2d18;
+  --fret-wire: #cbd5e1;
+  --fret-wire-glow: rgba(255, 255, 255, 0.4);
+  --gold-accent: #f59e0b;
+  --gold-glow: rgba(245, 158, 11, 0.4);
+  --bronze-string: #d4af37;
+  --steel-string: #e2e8f0;
+  --text-main: #fef3c7;
+  --text-muted: #b48c66;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  background-color: #0b0704;
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+}
 
 .guitar-app {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 36px 20px;
+  padding: 28px 20px 48px;
   width: 100%;
-  max-width: 1000px;
+  max-width: 1180px;
   margin: 0 auto;
 }
 
+/* Header */
 .guitar-header {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 22px;
 }
 
 .badge {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: 1.5px;
-  padding: 3px 8px;
-  border-radius: 4px;
-  background: rgba(212, 130, 62, 0.15);
-  border: 1px solid rgba(212, 130, 62, 0.35);
-  color: #d4823e;
-  margin-bottom: 8px;
+  letter-spacing: 2px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+  margin-bottom: 10px;
+  text-transform: uppercase;
 }
 
 .guitar-title {
-  font-size: 32px;
+  font-size: 38px;
   font-weight: 800;
-  letter-spacing: -0.5px;
-  color: #f4ede0;
-  margin-bottom: 4px;
+  letter-spacing: -1px;
+  background: linear-gradient(135deg, #fffbeb 30%, #d97706);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 6px;
 }
 
 .guitar-subtitle {
-  color: #b89a78;
-  font-size: 14px;
+  color: var(--text-muted);
+  font-size: 14.5px;
+  max-width: 600px;
 }
 
 .guitar-main {
@@ -53,336 +86,712 @@
   gap: 20px;
 }
 
-/* Settings Bar (Tone, Tuning, Strum Direction) */
-.settings-bar {
+/* Studio Control Strip */
+.studio-control-strip {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  background: rgba(42, 26, 13, 0.6);
-  border: 1px solid rgba(201, 161, 95, 0.2);
-  border-radius: 12px;
-  padding: 10px 18px;
+  background: linear-gradient(180deg, #24160d 0%, #170d07 100%);
+  border: 1px solid rgba(217, 119, 6, 0.25);
+  border-radius: 16px;
+  padding: 12px 20px;
   gap: 16px;
   flex-wrap: wrap;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
 }
 
-.setting-group {
+.control-cell {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.setting-label {
+.control-label {
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 1px;
-  color: #b89a78;
+  color: var(--text-muted);
   text-transform: uppercase;
 }
 
-.pill-selector {
+.tone-pill-selector {
   display: flex;
-  background: #170f08;
-  border: 1px solid rgba(201, 161, 95, 0.15);
-  border-radius: 8px;
+  background: #0f0704;
+  border: 1px solid rgba(217, 119, 6, 0.2);
+  border-radius: 10px;
   padding: 3px;
   gap: 4px;
 }
 
-.pill-btn {
-  padding: 5px 12px;
+.tone-pill-btn {
+  padding: 6px 12px;
   background: transparent;
   border: none;
-  border-radius: 6px;
-  color: #b89a78;
-  font-size: 11px;
+  border-radius: 7px;
+  color: var(--text-muted);
+  font-size: 11.5px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
-.pill-btn.active {
-  background: #d4823e;
-  color: #1a1007;
-  box-shadow: 0 2px 8px rgba(212, 130, 62, 0.4);
+.tone-pill-btn.active {
+  background: linear-gradient(135deg, #d97706, #b45309);
+  color: #ffffff;
+  box-shadow: 0 2px 10px rgba(217, 119, 6, 0.4);
 }
 
-.tuning-select {
-  background: #170f08;
-  border: 1px solid rgba(201, 161, 95, 0.25);
-  border-radius: 6px;
-  color: #e8c896;
+.tuning-dropdown {
+  background: #0f0704;
+  border: 1px solid rgba(217, 119, 6, 0.3);
+  border-radius: 8px;
+  color: #fde68a;
   font-size: 12px;
   font-weight: 600;
-  padding: 6px 12px;
+  padding: 7px 12px;
   cursor: pointer;
 }
 
-.direction-btn {
-  padding: 6px 14px;
-  background: #1e130a;
-  border: 1px solid rgba(201, 161, 95, 0.25);
-  border-radius: 6px;
-  color: #e8c896;
-  font-size: 11px;
+.direction-toggle-btn,
+.notes-toggle-btn {
+  padding: 7px 14px;
+  background: #0f0704;
+  border: 1px solid rgba(217, 119, 6, 0.3);
+  border-radius: 8px;
+  color: #fde68a;
+  font-size: 11.5px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s;
 }
 
-.direction-btn:hover {
-  background: #2b1c0f;
-  border-color: rgba(201, 161, 95, 0.5);
+.direction-toggle-btn:hover,
+.notes-toggle-btn:hover {
+  border-color: #f59e0b;
+  color: #ffffff;
+}
+
+.notes-toggle-btn.active {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: #f59e0b;
+}
+
+.volume-cell {
+  min-width: 130px;
+}
+
+.volume-slider {
+  accent-color: #f59e0b;
+  cursor: pointer;
+  width: 100%;
 }
 
 /* Guitar Chassis */
-.guitar-wrap {
+.guitar-chassis {
   width: 100%;
-  background: linear-gradient(160deg, #3d2817 0%, #25160b 100%);
-  border-radius: 24px;
-  border: 1px solid rgba(201, 161, 95, 0.25);
-  box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  padding: 30px 26px 24px;
+  background: linear-gradient(165deg, #3d2414 0%, #201108 50%, #150904 100%);
+  border-radius: 28px;
+  border: 2px solid rgba(217, 119, 6, 0.3);
+  box-shadow: 0 35px 80px -20px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  padding: 24px 26px 28px;
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
-/* Fretboard */
-.fretboard {
-  position: relative;
-  background: linear-gradient(180deg, #4a2f18 0%, #351f0f 100%);
-  border-radius: 12px;
-  padding: 24px 16px;
-  overflow: hidden;
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.7);
+/* Chassis Top Bar with Visualizer */
+.chassis-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  border-bottom: 1px solid rgba(217, 119, 6, 0.15);
+  padding-bottom: 16px;
 }
 
-.fret-markers {
+.active-chord-indicator {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.chord-indicator-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+}
+
+.chord-indicator-name {
+  font-size: 26px;
+  font-weight: 800;
+  color: #fbbf24;
+  text-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
+}
+
+/* Visualizer */
+.visualizer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.visualizer-label {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.visualizer-canvas {
+  background: rgba(10, 5, 2, 0.7);
+  border: 1px solid rgba(217, 119, 6, 0.2);
+  border-radius: 8px;
+}
+
+/* Guitar Neck Assembly */
+.guitar-neck-assembly {
+  display: flex;
+  align-items: stretch;
+  background: #140b06;
+  border-radius: 16px;
+  border: 1px solid rgba(217, 119, 6, 0.3);
+  box-shadow: inset 0 3px 14px rgba(0, 0, 0, 0.9);
+  overflow-x: auto;
+  position: relative;
+}
+
+/* Nut Block */
+.guitar-nut-block {
+  width: 76px;
+  background: linear-gradient(90deg, #26160d 0%, #e2d9cc 90%, #f3eee6 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 32px 6px 12px;
+  position: relative;
+  box-shadow: 3px 0 10px rgba(0, 0, 0, 0.7);
+  z-index: 5;
+}
+
+.nut-label {
   position: absolute;
-  inset: 0;
+  top: 8px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: #1a0f08;
+}
+
+.open-string-btn {
+  height: 44px;
+  background: #1e1109;
+  border: 1px solid rgba(217, 119, 6, 0.4);
+  border-radius: 6px;
+  color: #fef3c7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  padding: 2px 4px;
+}
+
+.open-string-btn:hover {
+  background: #382012;
+  border-color: #f59e0b;
+}
+
+.open-string-btn.plucked {
+  background: #d97706;
+  color: #ffffff;
+  box-shadow: 0 0 14px #f59e0b;
+  transform: scale(0.96);
+}
+
+.open-note-badge {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.key-hint {
+  font-size: 9.5px;
+  color: var(--text-muted);
+}
+
+/* Fretboard Wood */
+.fretboard-wood {
+  flex: 1;
+  position: relative;
+  background: linear-gradient(180deg, #2c1a0e 0%, #1e1108 50%, #29180d 100%);
+  display: flex;
+  flex-direction: column;
+  min-width: 660px;
+}
+
+/* Fret Inlay Layer */
+.fret-inlay-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   pointer-events: none;
 }
 
-.fret-line {
-  flex: 1;
-  border-right: 2px solid rgba(201, 161, 95, 0.15);
+.fret-column {
   position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.fret-line:last-child {
-  border-right: none;
-}
-
-.fret-dot {
+.fret-wire {
   position: absolute;
-  top: 50%;
-  right: 50%;
-  width: 8px;
-  height: 8px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(90deg, #64748b 0%, #f8fafc 50%, #475569 100%);
+  box-shadow: 1px 0 3px rgba(0, 0, 0, 0.6);
+}
+
+.fret-number-marker {
+  position: absolute;
+  bottom: 5px;
+  font-size: 9px;
+  font-weight: 700;
+  color: rgba(254, 243, 199, 0.3);
+}
+
+.inlay-dot.single {
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  background: rgba(232, 200, 150, 0.3);
-  transform: translate(50%, -50%);
-  box-shadow: 0 0 6px rgba(232, 200, 150, 0.2);
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #e2e8f0 40%, #94a3b8 100%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  opacity: 0.85;
 }
 
-.double-dot-top {
-  top: 28%;
+.double-inlay-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
 }
 
-.double-dot-bottom {
-  top: 72%;
+.inlay-dot.double {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #e2e8f0 40%, #94a3b8 100%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  opacity: 0.85;
 }
 
-/* Strings */
-.strings {
+/* Fret Strings Layer */
+.fret-strings-layer {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  z-index: 2;
+  justify-content: space-between;
+  padding: 32px 0 12px;
+  height: 100%;
+  z-index: 3;
 }
 
-.string-row {
+.fret-string-row {
+  position: relative;
+  height: 44px;
   display: flex;
   align-items: center;
-  gap: 14px;
 }
 
-.string-label {
-  width: 28px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
+.string-metal-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 2;
+  transition: all 0.08s;
+}
+
+.fret-string-row.string-vibrating .string-metal-line {
+  animation: stringOscillate 0.1s ease-in-out infinite alternate;
+}
+
+@keyframes stringOscillate {
+  0% { transform: translateY(-2px); }
+  100% { transform: translateY(2px); }
+}
+
+.fret-cell-row {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.fret-cell {
+  position: relative;
+  height: 100%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+
+.fret-cell:hover {
+  background: rgba(245, 158, 11, 0.12);
+}
+
+.subtle-note-label {
+  font-size: 9px;
   font-weight: 700;
-  color: #c9a15f;
-  text-align: center;
-  flex-shrink: 0;
+  color: rgba(254, 243, 199, 0.35);
+  transition: all 0.15s;
 }
 
-.string-track {
-  flex: 1;
-  height: 26px;
+.fret-cell:hover .subtle-note-label {
+  color: #fbbf24;
+  font-size: 11px;
+}
+
+.chord-finger-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  border: 2px solid #ffffff;
+  color: #000000;
+  font-size: 10px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.9);
+  animation: pulseDot 1.4s infinite;
+}
+
+@keyframes pulseDot {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(0.95); }
+}
+
+.fret-cell.active-pluck .chord-finger-dot {
+  background: #ffffff;
+  color: #d97706;
+  box-shadow: 0 0 20px #ffffff;
+}
+
+/* Soundhole & Strum Pad Zone */
+.guitar-soundhole-zone {
+  width: 170px;
+  background: linear-gradient(160deg, #2b1a0e 0%, #190e06 100%);
+  border-left: 3px solid rgba(217, 119, 6, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 5px 0 15px rgba(0, 0, 0, 0.8);
+}
+
+.soundhole-rosette {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #000000;
+  border: 4px solid #b45309;
+  box-shadow: 0 0 0 4px #1f1208, 0 0 0 7px #d97706, inset 0 0 25px rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.soundhole-label {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: rgba(254, 243, 199, 0.4);
+  text-align: center;
+}
+
+.soundhole-strings {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 32px 0 12px;
+  height: 100%;
+  z-index: 5;
+}
+
+.soundhole-string-strip {
+  height: 44px;
   display: flex;
   align-items: center;
   cursor: pointer;
   position: relative;
-  touch-action: none;
 }
 
-.string-line {
+.soundhole-wire {
   width: 100%;
-  border-radius: 2px;
-  background: linear-gradient(90deg, #d8c8a8, #c9a15f, #d8c8a8);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  transition: transform 0.06s ease, box-shadow 0.15s ease;
-  transform-origin: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+  transition: all 0.1s;
 }
 
-.string-track:hover .string-line {
-  box-shadow: 0 0 14px rgba(212, 130, 62, 0.7);
+.soundhole-string-strip.active-strummed .soundhole-wire {
+  background-color: #ffffff !important;
+  box-shadow: 0 0 15px #f59e0b;
+  transform: scaleY(1.5);
 }
 
-.string-line.plucked {
-  animation: pluckAnim 0.35s ease-out;
-  box-shadow: 0 0 18px rgba(212, 130, 62, 0.9);
-}
-
-@keyframes pluckAnim {
-  0%   { transform: scaleY(1) translateY(0); }
-  15%  { transform: scaleY(1) translateY(-6px); }
-  35%  { transform: scaleY(1) translateY(4px); }
-  55%  { transform: scaleY(1) translateY(-2px); }
-  100% { transform: scaleY(1) translateY(0); }
-}
-
-.key-hint {
-  width: 24px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  font-weight: 700;
-  color: #7a6248;
-  text-align: center;
-  flex-shrink: 0;
-}
-
-/* Chords */
-.chord-container {
+/* Chord Command Deck */
+.chord-command-deck {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
+  background: rgba(18, 10, 5, 0.8);
+  border: 1px solid rgba(217, 119, 6, 0.25);
+  border-radius: 18px;
+  padding: 18px 22px;
 }
 
-.chord-bar-header {
+.chord-deck-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-}
-
-.chord-bar-title {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  color: #c9a15f;
-}
-
-.chord-bar-hint {
-  font-size: 11px;
-  color: #88745d;
-}
-
-.controls {
-  display: flex;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: 10px;
-  justify-content: center;
 }
 
-.chord-btn {
-  background: rgba(201, 161, 95, 0.12);
-  border: 1px solid rgba(201, 161, 95, 0.35);
-  color: #e8c896;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 700;
-  padding: 10px 18px;
+.category-tabs {
+  display: flex;
+  background: #0f0704;
+  border: 1px solid rgba(217, 119, 6, 0.2);
   border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.15s ease;
+  padding: 3px;
+  gap: 4px;
 }
 
-.chord-btn:hover {
-  background: rgba(212, 130, 62, 0.25);
-  border-color: rgba(212, 130, 62, 0.6);
-  transform: translateY(-1px);
-}
-
-.chord-btn.active {
-  background: #d4823e;
-  color: #1a1007;
-  border-color: #d4823e;
-  box-shadow: 0 0 16px rgba(212, 130, 62, 0.6);
-}
-
-/* Footer Notes */
-.footer-note {
+.cat-tab-btn {
+  padding: 6px 14px;
+  background: transparent;
+  border: none;
+  border-radius: 7px;
+  color: var(--text-muted);
   font-size: 12px;
-  color: #7c6851;
-  text-align: center;
-  max-width: 600px;
-  line-height: 1.6;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
 }
 
-.footer-note kbd {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 4px;
-  padding: 2px 6px;
-  font-family: 'JetBrains Mono', monospace;
+.cat-tab-btn.active {
+  background: #f59e0b;
+  color: #1a0f08;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+}
+
+.hint-pill {
   font-size: 11px;
-  color: #e8c896;
+  color: var(--text-muted);
 }
 
-/* Start Overlay */
-.start-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 10, 6, 0.92);
-  backdrop-filter: blur(6px);
+.chords-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
+}
+
+.chord-key-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 10px;
+  background: linear-gradient(145deg, #24150c 0%, #170d07 100%);
+  border: 1px solid rgba(217, 119, 6, 0.25);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.chord-key-card:hover {
+  transform: translateY(-2px);
+  border-color: #f59e0b;
+  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.25);
+}
+
+.chord-key-card.selected-fret {
+  border-color: #f59e0b;
+  background: linear-gradient(145deg, #382012 0%, #24150c 100%);
+  box-shadow: 0 0 0 1px #f59e0b;
+}
+
+.chord-key-card.strum-active {
+  background: #f59e0b;
+  transform: scale(0.97);
+}
+
+.chord-key-card.strum-active .chord-symbol,
+.chord-key-card.strum-active .chord-full-name {
+  color: #1a0f08;
+}
+
+.chord-symbol {
+  font-size: 20px;
+  font-weight: 900;
+  color: #ffffff;
+  margin-bottom: 2px;
+}
+
+.chord-full-name {
+  font-size: 10.5px;
+  color: var(--text-muted);
+}
+
+/* Jam Progressions */
+.progressions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid rgba(217, 119, 6, 0.15);
+  padding-top: 14px;
+}
+
+.progression-title {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+}
+
+.progression-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.progression-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  background: #140b06;
+  border: 1px solid rgba(217, 119, 6, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.progression-card:hover {
+  border-color: #f59e0b;
+  background: #1e1109;
+}
+
+.progression-card.playing-loop {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+}
+
+.prog-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.prog-name {
+  font-size: 13px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.prog-status-badge {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+}
+
+.progression-card.playing-loop .prog-status-badge {
+  background: #10b981;
+  color: #ffffff;
+}
+
+.prog-chords-sequence {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.prog-chord-tag {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 8px;
+  background: #24150c;
+  border: 1px solid rgba(217, 119, 6, 0.3);
+  border-radius: 6px;
+  color: #fef3c7;
+  transition: all 0.15s;
+}
+
+.prog-chord-tag.highlight-chord {
+  background: #f59e0b;
+  color: #000000;
+  border-color: #ffffff;
+  transform: scale(1.15);
+  box-shadow: 0 0 10px #f59e0b;
+}
+
+/* Footer Guide */
+.footer-guide {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
-  cursor: pointer;
+  flex-wrap: wrap;
+  gap: 24px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  margin-top: 8px;
 }
 
-.start-button {
-  background: #d4823e;
-  color: #1c120a;
-  border: none;
-  font-size: 18px;
+.guide-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+kbd {
+  padding: 3px 7px;
+  background: #1f1208;
+  border: 1px solid rgba(217, 119, 6, 0.4);
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fef3c7;
+}
+
+.tip-highlight {
+  color: #f59e0b;
   font-weight: 800;
-  padding: 18px 42px;
-  border-radius: 14px;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(212, 130, 62, 0.5);
-  transition: all 0.2s ease;
-}
-
-.start-button:hover {
-  transform: scale(1.04);
-  box-shadow: 0 12px 35px rgba(212, 130, 62, 0.7);
-}
-
-@media (max-width: 640px) {
-  .guitar-app { padding: 20px 10px; }
-  .guitar-title { font-size: 24px; }
-  .guitar-wrap { padding: 18px 12px; border-radius: 18px; }
-  .fretboard { padding: 16px 8px; }
-  .strings { gap: 12px; }
-  .string-label { width: 22px; font-size: 11px; }
-  .key-hint { display: none; }
-  .chord-btn { flex: 1 1 calc(33.33% - 10px); min-width: 85px; }
 }

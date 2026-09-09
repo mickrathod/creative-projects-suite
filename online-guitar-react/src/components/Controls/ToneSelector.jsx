@@ -7,40 +7,43 @@ export const ToneSelector = ({
   tuningKey,
   onTuningChange,
   strumDirection,
-  onDirectionToggle
+  onDirectionToggle,
+  showNoteNames,
+  onToggleNoteNames,
+  volume,
+  onVolumeChange
 }) => {
+  const tones = [
+    { id: 'acoustic', label: '🌲 Dreadnought', desc: 'Warm spruce tone' },
+    { id: 'warm', label: '🪵 Classical', desc: 'Deep nylon warmth' },
+    { id: 'bright', label: '✨ 12-String', desc: 'Bright shimmer' },
+    { id: 'overdrive', label: '⚡ Tube Amp', desc: 'Crunchy electric' }
+  ];
+
   return (
-    <div className="settings-bar">
-      {/* Tone Presets */}
-      <div className="setting-group">
-        <span className="setting-label">TONE</span>
-        <div className="pill-selector">
-          <button
-            className={`pill-btn ${toneMode === 'acoustic' ? 'active' : ''}`}
-            onClick={() => onToneChange('acoustic')}
-          >
-            Acoustic Warm
-          </button>
-          <button
-            className={`pill-btn ${toneMode === 'bright' ? 'active' : ''}`}
-            onClick={() => onToneChange('bright')}
-          >
-            Bright Steel
-          </button>
-          <button
-            className={`pill-btn ${toneMode === 'overdrive' ? 'active' : ''}`}
-            onClick={() => onToneChange('overdrive')}
-          >
-            ⚡ Overdrive
-          </button>
+    <div className="studio-control-strip">
+      {/* Tone Mode Presets */}
+      <div className="control-cell">
+        <span className="control-label">Acoustic Body & Amp</span>
+        <div className="tone-pill-selector">
+          {tones.map((t) => (
+            <button
+              key={t.id}
+              className={`tone-pill-btn ${toneMode === t.id ? 'active' : ''}`}
+              onClick={() => onToneChange(t.id)}
+              title={t.desc}
+            >
+              {t.label}
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Tunings */}
-      <div className="setting-group">
-        <span className="setting-label">TUNING</span>
+      {/* Alternate Tunings */}
+      <div className="control-cell">
+        <span className="control-label">Tuning Profile</span>
         <select
-          className="tuning-select"
+          className="tuning-dropdown"
           value={tuningKey}
           onChange={(e) => onTuningChange(e.target.value)}
         >
@@ -52,16 +55,41 @@ export const ToneSelector = ({
         </select>
       </div>
 
-      {/* Strum Direction */}
-      <div className="setting-group">
-        <span className="setting-label">STRUM</span>
+      {/* Strum Pick Direction */}
+      <div className="control-cell">
+        <span className="control-label">Pick Strum</span>
         <button
-          className="direction-btn"
+          className="direction-toggle-btn"
           onClick={onDirectionToggle}
-          title="Toggle Downstroke / Upstroke"
+          title="Toggle upstroke / downstroke pick angle"
         >
-          {strumDirection === 'down' ? '↓ Downstroke' : '↑ Upstroke'}
+          {strumDirection === 'down' ? '⬇️ DOWNSTROKE' : '⬆️ UPSTROKE'}
         </button>
+      </div>
+
+      {/* Fret Note Labels Toggle */}
+      <div className="control-cell">
+        <span className="control-label">Fret Markers</span>
+        <button
+          className={`notes-toggle-btn ${showNoteNames ? 'active' : ''}`}
+          onClick={onToggleNoteNames}
+        >
+          {showNoteNames ? '💡 NOTES: ON' : '🌑 NOTES: OFF'}
+        </button>
+      </div>
+
+      {/* Master Volume */}
+      <div className="control-cell volume-cell">
+        <span className="control-label">Master: {Math.round(volume * 100)}%</span>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value={volume}
+          onChange={(e) => onVolumeChange(parseFloat(e.target.value))}
+          className="volume-slider"
+        />
       </div>
     </div>
   );
