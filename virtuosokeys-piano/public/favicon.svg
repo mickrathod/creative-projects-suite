@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="pianoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2a241b"/>
+      <stop offset="100%" stop-color="#0e0d0b"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffd56b"/>
+      <stop offset="100%" stop-color="#d4af37"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#pianoGrad)" stroke="#d4af37" stroke-width="2"/>
+  <!-- White keys -->
+  <rect x="10" y="16" width="8" height="34" rx="2" fill="#fafafa"/>
+  <rect x="20" y="16" width="8" height="34" rx="2" fill="#fafafa"/>
+  <rect x="30" y="16" width="8" height="34" rx="2" fill="#fafafa"/>
+  <rect x="40" y="16" width="8" height="34" rx="2" fill="#fafafa"/>
+  <!-- Black keys -->
+  <rect x="16" y="16" width="5" height="20" rx="1.5" fill="#141414"/>
+  <rect x="26" y="16" width="5" height="20" rx="1.5" fill="#141414"/>
+  <rect x="37" y="16" width="5" height="20" rx="1.5" fill="#141414"/>
+  <!-- Glowing Gold Note indicator -->
+  <circle cx="50" cy="22" r="3" fill="url(#goldGrad)"/>
+</svg>

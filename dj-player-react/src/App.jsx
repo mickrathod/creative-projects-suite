@@ -6,6 +6,7 @@ import { Deck } from './components/Deck/Deck';
 import { Mixer } from './components/Mixer/Mixer';
 import { SamplerRack } from './components/Sampler/SamplerRack';
 import { ShortcutsModal } from './components/Common/ShortcutsModal';
+import { DJGuideModal } from './components/Common/DJGuideModal';
 import './App.css';
 
 export function App() {
@@ -21,6 +22,7 @@ export function App() {
 
   // Deck States
   const [deckAState, setDeckAState] = useState({
+    trackId: 'cyberpulse',
     trackTitle: 'Cyberpulse (Tech House)',
     trackArtist: 'DJ Studio Pro',
     currentTime: 0,
@@ -38,6 +40,7 @@ export function App() {
   });
 
   const [deckBState, setDeckBState] = useState({
+    trackId: 'neondrift',
     trackTitle: 'Neon Drift (Electro Club)',
     trackArtist: 'DJ Studio Pro',
     currentTime: 0,
@@ -87,6 +90,7 @@ export function App() {
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
   const [isShortcutsOpen, setIsShortcutsOpen] = useState(false);
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
 
   // Initialize Demo Tracks
   const loadDemoTracks = useCallback(() => {
@@ -98,6 +102,7 @@ export function App() {
 
     setDeckAState((prev) => ({
       ...prev,
+      trackId: engine.deckA.trackId || 'cyberpulse',
       trackTitle: engine.deckA.trackTitle,
       trackArtist: `${engine.deckA.trackArtist} • ${engine.deckA.originalBpm}.0 BPM`,
       duration: engine.deckA.duration,
@@ -106,6 +111,7 @@ export function App() {
 
     setDeckBState((prev) => ({
       ...prev,
+      trackId: engine.deckB.trackId || 'neondrift',
       trackTitle: engine.deckB.trackTitle,
       trackArtist: `${engine.deckB.trackArtist} • ${engine.deckB.originalBpm}.0 BPM`,
       duration: engine.deckB.duration,
@@ -324,6 +330,44 @@ export function App() {
     }
   };
 
+  const handleSelectBuiltinTrack = useCallback((deckId, trackId) => {
+    engine.pause(deckId);
+    const result = engine.loadBuiltinTrack(deckId, trackId);
+    const peaks = precalculatePeaks(result.buffer);
+
+    if (deckId === 'A') {
+      setPeaksA(peaks);
+      setDeckAState((prev) => ({
+        ...prev,
+        trackId: result.track.id,
+        trackTitle: result.track.title,
+        trackArtist: `${result.track.artist} • ${result.bpm}.0 BPM`,
+        duration: result.duration,
+        currentBpm: result.bpm,
+        currentTime: 0,
+        isPlaying: false,
+        pitchPercent: 0,
+        hotCues: [null, null, null, null],
+        loopActive: false
+      }));
+    } else {
+      setPeaksB(peaks);
+      setDeckBState((prev) => ({
+        ...prev,
+        trackId: result.track.id,
+        trackTitle: result.track.title,
+        trackArtist: `${result.track.artist} • ${result.bpm}.0 BPM`,
+        duration: result.duration,
+        currentBpm: result.bpm,
+        currentTime: 0,
+        isPlaying: false,
+        pitchPercent: 0,
+        hotCues: [null, null, null, null],
+        loopActive: false
+      }));
+    }
+  }, [engine]);
+
   // ==========================================================================
   // Mixer Handlers
   // ==========================================================================
@@ -525,6 +569,7 @@ export function App() {
         recordingTime={recordingTime}
         onRecordToggle={handleRecordToggle}
         onOpenShortcuts={() => setIsShortcutsOpen(true)}
+        onOpenGuide={() => setIsGuideOpen(true)}
         onResetDemos={loadDemoTracks}
         masterAnalyser={engine.masterAnalyser}
       />
@@ -551,6 +596,7 @@ export function App() {
           onHotCueTrigger={(idx) => handleHotCueTrigger('A', idx)}
           onFileUpload={(file) => handleFileUpload('A', file)}
           onReloadDemo={loadDemoTracks}
+          onSelectTrack={(trackId) => handleSelectBuiltinTrack('A', trackId)}
         />
 
         <Mixer
@@ -586,6 +632,7 @@ export function App() {
           onHotCueTrigger={(idx) => handleHotCueTrigger('B', idx)}
           onFileUpload={(file) => handleFileUpload('B', file)}
           onReloadDemo={loadDemoTracks}
+          onSelectTrack={(trackId) => handleSelectBuiltinTrack('B', trackId)}
         />
       </main>
 
@@ -594,6 +641,11 @@ export function App() {
       <ShortcutsModal
         isOpen={isShortcutsOpen}
         onClose={() => setIsShortcutsOpen(false)}
+      />
+
+      <DJGuideModal
+        isOpen={isGuideOpen}
+        onClose={() => setIsGuideOpen(false)}
       />
     </div>
   );

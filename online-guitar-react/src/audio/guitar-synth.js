@@ -243,10 +243,16 @@ export class GuitarSynth {
     // Decay factor (thicker bass strings ring longer than thin unwound trebles)
     const decayFactor = 0.993 - (stringIndex * 0.0018);
 
-    // Karplus-Strong averaging loop
+    // Karplus-Strong averaging loop: each new sample averages the two
+    // most recent samples exactly one period behind it (the standard
+    // "two-tap" filtered delay line). Using i-period and i-period+1
+    // keeps the averaging window inside the already-computed output,
+    // so the effective delay length - and therefore the pitch - stays
+    // locked to `period` samples instead of drifting off by one.
     for (let i = period; i < totalSamples; i++) {
-      const val = ((output[i - period] + output[i - period - 1]) / 2) * decayFactor;
-      output[i] = val;
+      const tapA = output[i - period];
+      const tapB = i - period + 1 < i ? output[i - period + 1] : tapA;
+      output[i] = ((tapA + tapB) / 2) * decayFactor;
     }
 
     const source = this.ctx.createBufferSource();

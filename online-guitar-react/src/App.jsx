@@ -4,6 +4,7 @@ import { Fretboard } from './components/Fretboard/Fretboard';
 import { ChordBar } from './components/Controls/ChordBar';
 import { ToneSelector } from './components/Controls/ToneSelector';
 import { SongPlayer } from './components/SongBook/SongPlayer';
+import { LearnAcademy } from './components/LearnAcademy/LearnAcademy';
 import { SoundVisualizer } from './components/Common/SoundVisualizer';
 import { StartOverlay } from './components/Common/StartOverlay';
 import './App.css';
@@ -139,25 +140,31 @@ export function App() {
       {!isStarted && <StartOverlay onStart={handleStart} />}
 
       <header className="guitar-header">
-        <div className="badge">AURASTRINGS PRO • BOLLYWOOD EDITION</div>
+        <div className="badge">AURASTRINGS PRO • ANUV JAIN ACOUSTIC EDITION</div>
         <h1 className="guitar-title">AuraStrings Virtual Guitar</h1>
         <p className="guitar-subtitle">
-          Play along with <strong>Tum Hi Ho / Tum Mere Ho</strong> and Bollywood acoustic guitar classics
+          Play along with <strong>Tum Mere Ho (Anuv Jain)</strong>, Husn, Baarishein & Acoustic Classics
         </p>
 
         {/* View Mode Switcher */}
         <div className="view-mode-tabs">
           <button
+            className={`mode-tab-btn ${activeTab === 'learn' ? 'active' : ''}`}
+            onClick={() => setActiveTab('learn')}
+          >
+            🎓 Learn Academy & Lessons
+          </button>
+          <button
             className={`mode-tab-btn ${activeTab === 'songbook' ? 'active' : ''}`}
             onClick={() => setActiveTab('songbook')}
           >
-            🎵 Song Book (Tum Hi Ho)
+            🎵 Song Book (Tum Mere Ho)
           </button>
           <button
             className={`mode-tab-btn ${activeTab === 'freeplay' ? 'active' : ''}`}
             onClick={() => setActiveTab('freeplay')}
           >
-            🎸 Free Play & Chord Matrix
+            🎸 Free Play & Chords
           </button>
         </div>
       </header>
@@ -200,7 +207,17 @@ export function App() {
             showNoteNames={showNoteNames}
           />
 
-          {/* Tab 1: Song Book Mode (Tum Hi Ho, Channa Mereya, etc.) */}
+          {/* Tab 1: Learn Academy Mode */}
+          {activeTab === 'learn' && (
+            <LearnAcademy
+              onStrumChord={handleStrumChord}
+              onPluckFret={handlePluckFret}
+              onSelectChordFingering={handleSelectChordFingering}
+              currentStrings={currentStrings}
+            />
+          )}
+
+          {/* Tab 2: Song Book Mode (Tum Mere Ho, Husn, etc.) */}
           {activeTab === 'songbook' && (
             <SongPlayer
               onStrumChord={handleStrumChord}
@@ -210,7 +227,7 @@ export function App() {
             />
           )}
 
-          {/* Tab 2: Free Play Chords & Jam Progressions */}
+          {/* Tab 3: Free Play Chords & Jam Progressions */}
           {activeTab === 'freeplay' && (
             <ChordBar
               onStrumChord={handleStrumChord}
