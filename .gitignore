@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+**/node_modules/
+package-lock.json
+
+# Production builds
+dist/
+**/dist/
+build/
+**/build/
+
+# Logs and environment
+*.log
+**/*.log
+npm-debug.log*
+yarn-debug.log*
+.env
+.env.local
+.env.*.local
+
+# Python cache & virtual environments
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+**/.venv/
+
+# Browser & session profiles (contain cookies / private auth)
+whatsapp_profile/
+**/whatsapp_profile/
+browser_profile/
+**/browser_profile/
+sent_whatsapp_history.json
+**/sent_whatsapp_history.json
+
+# Operating System & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+**/.vscode/
+.idea/
+**/.idea/
+.system_generated/
+**/.system_generated/
+scratch/
