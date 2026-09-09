@@ -795,3 +795,321 @@ kbd {
   color: #f59e0b;
   font-weight: 800;
 }
+
+/* ==========================================================================
+   View Mode Switcher Tabs
+   ========================================================================== */
+.view-mode-tabs {
+  display: flex;
+  gap: 8px;
+  background: #150904;
+  border: 1px solid rgba(217, 119, 6, 0.3);
+  border-radius: 12px;
+  padding: 4px;
+  margin-top: 14px;
+}
+
+.mode-tab-btn {
+  padding: 8px 18px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mode-tab-btn:hover {
+  color: #fef3c7;
+}
+
+.mode-tab-btn.active {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #1a0f08;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+}
+
+/* ==========================================================================
+   Song Studio & Karaoke Lyrics Stage
+   ========================================================================== */
+.song-studio-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: rgba(18, 10, 5, 0.85);
+  border: 1px solid rgba(217, 119, 6, 0.3);
+  border-radius: 20px;
+  padding: 22px 24px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.song-studio-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  border-bottom: 1px solid rgba(217, 119, 6, 0.2);
+  padding-bottom: 14px;
+}
+
+.song-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.song-badge {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #f59e0b;
+}
+
+.current-song-name {
+  font-size: 24px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.song-artist-meta {
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.song-select-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.song-select-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.song-picker-dropdown {
+  background: #0f0704;
+  border: 1px solid rgba(217, 119, 6, 0.4);
+  border-radius: 8px;
+  color: #fde68a;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+/* Lyrics Display Track */
+.lyrics-karaoke-stage {
+  max-height: 220px;
+  overflow-y: auto;
+  border-radius: 12px;
+  background: #0d0603;
+  border: 1px solid rgba(217, 119, 6, 0.15);
+  padding: 8px;
+}
+
+.lyrics-display-track {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lyric-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.lyric-row:hover {
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.lyric-row.past-line {
+  opacity: 0.55;
+}
+
+.lyric-row.active-singing {
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.22) 0%, rgba(245, 158, 11, 0.04) 100%);
+  border-left: 4px solid #f59e0b;
+  transform: translateX(4px);
+}
+
+.line-chord-badge {
+  width: 48px;
+  height: 28px;
+  background: #23140a;
+  border: 1px solid rgba(217, 119, 6, 0.4);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 900;
+  color: #fbbf24;
+  flex-shrink: 0;
+}
+
+.lyric-row.active-singing .line-chord-badge {
+  background: #f59e0b;
+  color: #1a0f08;
+  box-shadow: 0 0 10px #f59e0b;
+}
+
+.line-text {
+  font-size: 15px;
+  color: #e2e8f0;
+  flex: 1;
+}
+
+.lyric-row.active-singing .line-text {
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+}
+
+.now-playing-wave {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #f59e0b;
+  animation: pulseNowPlaying 1.2s infinite;
+}
+
+@keyframes pulseNowPlaying {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+/* Song Controls Bar */
+.song-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  border-top: 1px solid rgba(217, 119, 6, 0.15);
+  padding-top: 14px;
+}
+
+.song-buttons-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-play-song {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  border: none;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+}
+
+.btn-play-song:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.btn-play-song.playing {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+}
+
+.btn-intro-riff {
+  padding: 10px 16px;
+  background: #24150c;
+  border: 1px solid rgba(217, 119, 6, 0.35);
+  border-radius: 10px;
+  color: #fbbf24;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-intro-riff:hover {
+  background: #382012;
+  border-color: #f59e0b;
+}
+
+.btn-manual-advance {
+  padding: 10px 16px;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: 10px;
+  color: #fde68a;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-manual-advance:hover {
+  background: rgba(245, 158, 11, 0.25);
+  color: #ffffff;
+}
+
+.song-telemetry {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pattern-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+}
+
+.tel-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--text-muted);
+}
+
+.tel-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  color: #fde68a;
+}
+
+.speed-pills {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.speed-btn {
+  padding: 3px 8px;
+  background: #140b06;
+  border: 1px solid rgba(217, 119, 6, 0.25);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.speed-btn.active {
+  background: #f59e0b;
+  color: #1a0f08;
+  border-color: #f59e0b;
+}
+

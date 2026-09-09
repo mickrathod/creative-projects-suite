@@ -3,6 +3,7 @@ import { GuitarSynth, TUNINGS, CHORDS } from './audio/guitar-synth';
 import { Fretboard } from './components/Fretboard/Fretboard';
 import { ChordBar } from './components/Controls/ChordBar';
 import { ToneSelector } from './components/Controls/ToneSelector';
+import { SongPlayer } from './components/SongBook/SongPlayer';
 import { SoundVisualizer } from './components/Common/SoundVisualizer';
 import { StartOverlay } from './components/Common/StartOverlay';
 import './App.css';
@@ -15,11 +16,12 @@ export function App() {
   const synth = synthRef.current;
 
   const [isStarted, setIsStarted] = useState(false);
+  const [activeTab, setActiveTab] = useState('songbook'); // 'songbook' or 'freeplay'
   const [tuningKey, setTuningKey] = useState('standard');
   const [toneMode, setToneMode] = useState('acoustic');
   const [strumDirection, setStrumDirection] = useState('down');
   const [activeChord, setActiveChord] = useState(null);
-  const [selectedChord, setSelectedChord] = useState('G major');
+  const [selectedChord, setSelectedChord] = useState('E minor');
   const [activeFretPlucks, setActiveFretPlucks] = useState({});
   const [showNoteNames, setShowNoteNames] = useState(true);
   const [volume, setVolume] = useState(0.85);
@@ -63,7 +65,7 @@ export function App() {
     setActiveChord(chordName);
     setSelectedChord(chordName);
 
-    const activeIndices = synth.strumChord(fretOffsets, currentStrings, strumDirection, 24);
+    synth.strumChord(fretOffsets, currentStrings, strumDirection, 24);
 
     // Light up frets on the fretboard
     const plucks = {};
@@ -107,7 +109,7 @@ export function App() {
 
       const key = e.key;
 
-      // 1-6 for strings (plucks the fretted note of currently selected chord)
+      // 1-6 for strings
       if (['1', '2', '3', '4', '5', '6'].includes(key)) {
         const idx = parseInt(key, 10) - 1;
         const frets = selectedChord ? CHORDS[selectedChord] : null;
@@ -117,13 +119,13 @@ export function App() {
 
       // Chord shortcuts
       const upper = key.toUpperCase();
-      if (upper === 'E') handleStrumChord('E major');
-      else if (upper === 'A') handleStrumChord('A major');
+      if (upper === 'E') handleStrumChord('E minor');
+      else if (upper === 'A') handleStrumChord('A minor');
       else if (upper === 'D') handleStrumChord('D major');
       else if (upper === 'G') handleStrumChord('G major');
       else if (upper === 'C') handleStrumChord('C major');
       else if (upper === 'F') handleStrumChord('F major');
-      else if (upper === 'B') handleStrumChord('B major');
+      else if (upper === 'B') handleStrumChord('B minor');
     };
 
     window.addEventListener('keydown', handleKeyDown);
@@ -137,15 +139,31 @@ export function App() {
       {!isStarted && <StartOverlay onStart={handleStart} />}
 
       <header className="guitar-header">
-        <div className="badge">AURASTRINGS PRO • KARPLUS-STRONG DSP</div>
+        <div className="badge">AURASTRINGS PRO • BOLLYWOOD EDITION</div>
         <h1 className="guitar-title">AuraStrings Virtual Guitar</h1>
         <p className="guitar-subtitle">
-          Studio-grade physical string modeling with interactive 12-fret neck & chord jammer
+          Play along with <strong>Tum Hi Ho / Tum Mere Ho</strong> and Bollywood acoustic guitar classics
         </p>
+
+        {/* View Mode Switcher */}
+        <div className="view-mode-tabs">
+          <button
+            className={`mode-tab-btn ${activeTab === 'songbook' ? 'active' : ''}`}
+            onClick={() => setActiveTab('songbook')}
+          >
+            🎵 Song Book (Tum Hi Ho)
+          </button>
+          <button
+            className={`mode-tab-btn ${activeTab === 'freeplay' ? 'active' : ''}`}
+            onClick={() => setActiveTab('freeplay')}
+          >
+            🎸 Free Play & Chord Matrix
+          </button>
+        </div>
       </header>
 
       <main className="guitar-main">
-        {/* Top Controls Strip: Tone, Tuning, Direction, Volume, Note Labels */}
+        {/* Top Controls Strip */}
         <ToneSelector
           toneMode={toneMode}
           onToneChange={handleToneChange}
@@ -164,7 +182,7 @@ export function App() {
           {/* Top Chassis Bar with Visualizer */}
           <div className="chassis-top-bar">
             <div className="active-chord-indicator">
-              <span className="chord-indicator-label">ACTIVE CHORD VOICING</span>
+              <span className="chord-indicator-label">CURRENT CHORD & FINGERINGS</span>
               <div className="chord-indicator-name">
                 {selectedChord || 'Free Fretboard'}
               </div>
@@ -173,7 +191,7 @@ export function App() {
             <SoundVisualizer synth={synth} />
           </div>
 
-          {/* Fully Interactive 12-Fret Fretboard & Strumming Zone */}
+          {/* Interactive 12-Fret Fretboard & Strum Zone */}
           <Fretboard
             strings={currentStrings}
             onPluckFret={handlePluckFret}
@@ -182,28 +200,40 @@ export function App() {
             showNoteNames={showNoteNames}
           />
 
-          {/* Categorized Chord Matrix & Rhythm Jam Progressions */}
-          <ChordBar
-            onStrumChord={handleStrumChord}
-            activeChord={activeChord}
-            selectedChord={selectedChord}
-            onSelectChordFingering={handleSelectChordFingering}
-          />
+          {/* Tab 1: Song Book Mode (Tum Hi Ho, Channa Mereya, etc.) */}
+          {activeTab === 'songbook' && (
+            <SongPlayer
+              onStrumChord={handleStrumChord}
+              onPluckFret={handlePluckFret}
+              onSelectChordFingering={handleSelectChordFingering}
+              currentStrings={currentStrings}
+            />
+          )}
+
+          {/* Tab 2: Free Play Chords & Jam Progressions */}
+          {activeTab === 'freeplay' && (
+            <ChordBar
+              onStrumChord={handleStrumChord}
+              activeChord={activeChord}
+              selectedChord={selectedChord}
+              onSelectChordFingering={handleSelectChordFingering}
+            />
+          )}
         </div>
 
-        {/* Tactile Keyboard Guide */}
+        {/* Footer Keyboard Guide */}
         <footer className="footer-guide">
           <div className="guide-item">
             <kbd>1</kbd>&ndash;<kbd>6</kbd>
             <span>Pluck Fretted Strings</span>
           </div>
           <div className="guide-item">
-            <kbd>C</kbd> <kbd>D</kbd> <kbd>E</kbd> <kbd>F</kbd> <kbd>G</kbd> <kbd>A</kbd> <kbd>B</kbd>
-            <span>Instant Major Chords</span>
+            <kbd>E</kbd> <kbd>B</kbd> <kbd>C</kbd> <kbd>D</kbd> <kbd>A</kbd> <kbd>G</kbd>
+            <span>Tum Hi Ho Chords</span>
           </div>
           <div className="guide-item">
-            <span className="tip-highlight">Fretboard Tip:</span>
-            <span>Click any fret on any string to play custom notes & solos!</span>
+            <span className="tip-highlight">Karaoke Tip:</span>
+            <span>Click any lyric line in the songbook to instantly jump and strum that chord!</span>
           </div>
         </footer>
       </main>
