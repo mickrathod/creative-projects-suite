@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>React.js Application Suite & Micro-SaaS Launch Hub</title>
+  <title>Creative Projects Suite & Micro-SaaS Applications | Live Hub</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,7 +42,7 @@
     }
 
     .hub-container {
-      max-width: 1280px;
+      max-width: 1320px;
       width: 100%;
     }
 
@@ -50,16 +50,16 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 16px;
+      padding: 6px 18px;
       background: rgba(16, 185, 129, 0.12);
       border: 1px solid rgba(16, 185, 129, 0.3);
       border-radius: 30px;
       color: var(--accent-emerald);
-      font-size: 12px;
+      font-size: 12.5px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .pulse-dot {
@@ -77,11 +77,11 @@
     }
 
     .hub-title {
-      font-size: 44px;
+      font-size: 46px;
       font-weight: 800;
       letter-spacing: -1.2px;
       line-height: 1.2;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       background: linear-gradient(135deg, #ffffff 30%, #94a3b8);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -90,15 +90,15 @@
     .hub-subtitle {
       font-size: 16px;
       color: var(--text-muted);
-      margin-bottom: 44px;
-      max-width: 750px;
+      margin-bottom: 48px;
+      max-width: 780px;
       line-height: 1.6;
     }
 
     .grid-cards {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 26px;
     }
 
     .saas-card {
@@ -116,7 +116,7 @@
 
     .saas-card:hover {
       transform: translateY(-4px);
-      border-color: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.22);
     }
 
     .card-top {
@@ -127,13 +127,13 @@
     }
 
     .icon-box {
-      width: 50px;
-      height: 50px;
+      width: 52px;
+      height: 52px;
       border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
+      font-size: 25px;
     }
 
     .icon-quote { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
@@ -144,14 +144,14 @@
     .icon-sub { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
     .icon-drive { background: linear-gradient(135deg, #ec4899, #be185d); }
 
-    .port-pill {
-      font-size: 12px;
+    .live-pill {
+      font-size: 11.5px;
       font-weight: 700;
       font-family: 'JetBrains Mono', monospace;
       padding: 4px 10px;
       border-radius: 20px;
-      background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.3);
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
       color: #34d399;
       display: flex;
       align-items: center;
@@ -173,14 +173,14 @@
     }
 
     .project-name {
-      font-size: 21px;
+      font-size: 22px;
       font-weight: 800;
       margin-bottom: 8px;
       color: #ffffff;
     }
 
     .project-desc {
-      font-size: 13.5px;
+      font-size: 14px;
       color: var(--text-muted);
       line-height: 1.6;
       margin-bottom: 20px;
@@ -207,7 +207,13 @@
       font-weight: bold;
     }
 
-    .btn-main {
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .btn-live {
       padding: 12px 18px;
       border-radius: 10px;
       font-weight: 700;
@@ -218,13 +224,33 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      background: #2563eb;
       color: #ffffff;
       transition: all 0.2s;
     }
-    .btn-main:hover {
-      background: #1d4ed8;
-      transform: translateY(-1px);
+    .btn-live:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.1);
+    }
+
+    .btn-repo {
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 13px;
+      text-decoration: none;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .btn-repo:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
     }
   </style>
 </head>
@@ -234,93 +260,52 @@
     <div style="text-align: center;">
       <div class="hero-badge">
         <div class="pulse-dot"></div>
-        <span>7 React.js Applications Running Concurrently • Live Dev Servers</span>
+        <span>7 Standalone React Applications Deployed Live on GitHub Pages</span>
       </div>
-      <h1 class="hub-title">React.js Project Command Center</h1>
-      <p class="hub-subtitle" style="margin: 0 auto 40px;">
-        Every application is running independently on its dedicated local port with Vite HMR, React 19 architecture, and zero conflicts.
+      <h1 class="hub-title">Creative Projects Suite</h1>
+      <p class="hub-subtitle" style="margin: 0 auto 44px;">
+        Each web application has its own dedicated GitHub repository with full source code on <code>main</code> and production builds served live via <strong>GitHub Pages</strong>.
       </p>
     </div>
 
     <div class="grid-cards">
       
-      <!-- App 1: QuoteGenius SaaS -->
+      <!-- App 1: ApexDrive 3D -->
       <div class="saas-card">
         <div>
           <div class="card-top">
-            <div class="icon-box icon-quote">⚡</div>
-            <div class="port-pill">● PORT 5173</div>
+            <div class="icon-box icon-drive">🏎️</div>
+            <div class="live-pill">● GITHUB PAGES LIVE</div>
           </div>
-          <span class="app-badge-standalone">Standalone Project 1 • quote-calculator-react</span>
-          <h2 class="project-name">QuoteGenius SaaS</h2>
+          <span class="app-badge-standalone">Three.js + Cannon-es Physics</span>
+          <h2 class="project-name">ApexDrive 3D</h2>
           <p class="project-desc">
-            Dynamic formula builder, live reactive price calculator widget, inbound leads CRM inbox, CSV exporter, and 1-line website embedder.
+            Next-generation 3D physics driving game portfolio with vehicle suspension, drift mechanics, procedural engine audio synthesis, and GPS radar HUD.
           </p>
           <ul class="features-list">
-            <li><span class="chk">✓</span> Visual Pricing Formula & Preset Builder</li>
-            <li><span class="chk">✓</span> Real-Time Leads Inbox & CRM Table</li>
-            <li><span class="chk">✓</span> WhatsApp 1-Click Lead Handoff & CSV Exporter</li>
+            <li><span class="chk">✓</span> Rigid-Body Bike Dynamics & Drift Physics</li>
+            <li><span class="chk">✓</span> Procedural Web Audio Engine Synthesizer</li>
+            <li><span class="chk">✓</span> 3 Camera Modes & Telemetry Speedometer</li>
           </ul>
         </div>
-        <a href="http://localhost:5173/" target="_blank" class="btn-main" style="background: #3b82f6;">
-          <span>⚡</span> Open QuoteGenius (:5173)
-        </a>
-      </div>
-
-      <!-- App 2: ReviewBooster SaaS -->
-      <div class="saas-card">
-        <div>
-          <div class="card-top">
-            <div class="icon-box icon-review">⭐</div>
-            <div class="port-pill">● PORT 5174</div>
-          </div>
-          <span class="app-badge-standalone">Standalone Project 2 • review-booster-react</span>
-          <h2 class="project-name">ReviewBooster SaaS</h2>
-          <p class="project-desc">
-            High-resolution QR counter stand designer, printable acrylic table tent mode (Ctrl+P), mobile review funnel & negative complaint intercept inbox.
-          </p>
-          <ul class="features-list">
-            <li><span class="chk">✓</span> Live QR Code Generator & Counter Stand Designer</li>
-            <li><span class="chk">✓</span> Printable Acrylic Table Tent Mode (Ctrl + P)</li>
-            <li><span class="chk">✓</span> Private Feedback Intercept CRM Inbox</li>
-          </ul>
+        <div class="btn-group">
+          <a href="https://mickrathod.github.io/apexdrive-3d/" target="_blank" class="btn-live" style="background: #ec4899;">
+            <span>🚀</span> Launch ApexDrive 3D Live
+          </a>
+          <a href="https://github.com/mickrathod/apexdrive-3d" target="_blank" class="btn-repo">
+            <span>💻</span> View GitHub Repository
+          </a>
         </div>
-        <a href="http://localhost:5174/" target="_blank" class="btn-main" style="background: #6366f1;">
-          <span>⭐</span> Open ReviewBooster (:5174)
-        </a>
       </div>
 
-      <!-- App 3: BookingBolt SaaS -->
-      <div class="saas-card">
-        <div>
-          <div class="card-top">
-            <div class="icon-box icon-booking">📅</div>
-            <div class="port-pill">● PORT 5175</div>
-          </div>
-          <span class="app-badge-standalone">Standalone Project 3 • booking-bolt-react</span>
-          <h2 class="project-name">BookingBolt SaaS</h2>
-          <p class="project-desc">
-            Embeddable 30-second booking widget, live weekly calendar CRM, configurable service catalogs, buffer times, and deposit capture protection.
-          </p>
-          <ul class="features-list">
-            <li><span class="chk">✓</span> 30-Second Customer Booking Widget</li>
-            <li><span class="chk">✓</span> Live Drag-Free Weekly Calendar CRM</li>
-            <li><span class="chk">✓</span> Deposit Capture & WhatsApp Confirmations</li>
-          </ul>
-        </div>
-        <a href="http://localhost:5175/" target="_blank" class="btn-main" style="background: #10b981;">
-          <span>📅</span> Open BookingBolt (:5175)
-        </a>
-      </div>
-
-      <!-- App 4: PulseDeck Pro -->
+      <!-- App 2: PulseDeck Pro -->
       <div class="saas-card">
         <div>
           <div class="card-top">
             <div class="icon-box icon-dj">🎧</div>
-            <div class="port-pill">● PORT 5176</div>
+            <div class="live-pill">● GITHUB PAGES LIVE</div>
           </div>
-          <span class="app-badge-standalone">React Web Audio • dj-player-react</span>
+          <span class="app-badge-standalone">React 19 • Web Audio API</span>
           <h2 class="project-name">PulseDeck Pro</h2>
           <p class="project-desc">
             Hardware-grade Pioneer CDJ/DJM DJ console with real-time vinyl scratch physics, procedural dance synthesis, 3-band isolator EQ, and 8-pad sampler.
@@ -331,19 +316,24 @@
             <li><span class="chk">✓</span> 8-Pad Performance Sampler & Waveforms</li>
           </ul>
         </div>
-        <a href="http://localhost:5176/" target="_blank" class="btn-main" style="background: #06b6d4;">
-          <span>🎧</span> Open PulseDeck Pro (:5176)
-        </a>
+        <div class="btn-group">
+          <a href="https://mickrathod.github.io/pulsedeck-pro/" target="_blank" class="btn-live" style="background: #06b6d4;">
+            <span>🚀</span> Launch PulseDeck Pro Live
+          </a>
+          <a href="https://github.com/mickrathod/pulsedeck-pro" target="_blank" class="btn-repo">
+            <span>💻</span> View GitHub Repository
+          </a>
+        </div>
       </div>
 
-      <!-- App 5: AuraStrings -->
+      <!-- App 3: AuraStrings -->
       <div class="saas-card">
         <div>
           <div class="card-top">
             <div class="icon-box icon-guitar">🎸</div>
-            <div class="port-pill">● PORT 5177</div>
+            <div class="live-pill">● GITHUB PAGES LIVE</div>
           </div>
-          <span class="app-badge-standalone">Physical Modeling • online-guitar-react</span>
+          <span class="app-badge-standalone">Karplus-Strong DSP Modeling</span>
           <h2 class="project-name">AuraStrings</h2>
           <p class="project-desc">
             Mathematical Karplus-Strong string synthesis guitar simulator with real-time string vibration dynamics, chord presets, and tube overdrive.
@@ -354,19 +344,108 @@
             <li><span class="chk">✓</span> Standard Chords & Overdrive Tone Profiles</li>
           </ul>
         </div>
-        <a href="http://localhost:5177/" target="_blank" class="btn-main" style="background: #f97316;">
-          <span>🎸</span> Open AuraStrings (:5177)
-        </a>
+        <div class="btn-group">
+          <a href="https://mickrathod.github.io/aurastrings-guitar/" target="_blank" class="btn-live" style="background: #f97316;">
+            <span>🚀</span> Launch AuraStrings Live
+          </a>
+          <a href="https://github.com/mickrathod/aurastrings-guitar" target="_blank" class="btn-repo">
+            <span>💻</span> View GitHub Repository
+          </a>
+        </div>
       </div>
 
-      <!-- App 6: SubscribedOS -->
+      <!-- App 4: QuoteGenius SaaS -->
+      <div class="saas-card">
+        <div>
+          <div class="card-top">
+            <div class="icon-box icon-quote">⚡</div>
+            <div class="live-pill">● GITHUB PAGES LIVE</div>
+          </div>
+          <span class="app-badge-standalone">Micro-SaaS • Estimator & CRM</span>
+          <h2 class="project-name">QuoteGenius SaaS</h2>
+          <p class="project-desc">
+            Dynamic formula builder, live reactive price calculator widget, inbound leads CRM inbox, CSV exporter, and 1-line website embedder.
+          </p>
+          <ul class="features-list">
+            <li><span class="chk">✓</span> Visual Pricing Formula & Preset Builder</li>
+            <li><span class="chk">✓</span> Real-Time Leads Inbox & CRM Table</li>
+            <li><span class="chk">✓</span> WhatsApp 1-Click Lead Handoff & CSV Exporter</li>
+          </ul>
+        </div>
+        <div class="btn-group">
+          <a href="https://mickrathod.github.io/quotegenius-saas/" target="_blank" class="btn-live" style="background: #3b82f6;">
+            <span>🚀</span> Launch QuoteGenius Live
+          </a>
+          <a href="https://github.com/mickrathod/quotegenius-saas" target="_blank" class="btn-repo">
+            <span>💻</span> View GitHub Repository
+          </a>
+        </div>
+      </div>
+
+      <!-- App 5: ReviewBooster SaaS -->
+      <div class="saas-card">
+        <div>
+          <div class="card-top">
+            <div class="icon-box icon-review">⭐</div>
+            <div class="live-pill">● GITHUB PAGES LIVE</div>
+          </div>
+          <span class="app-badge-standalone">Micro-SaaS • QR & Reputation</span>
+          <h2 class="project-name">ReviewBooster SaaS</h2>
+          <p class="project-desc">
+            High-resolution QR counter stand designer, printable acrylic table tent mode (Ctrl+P), mobile review funnel & negative complaint intercept inbox.
+          </p>
+          <ul class="features-list">
+            <li><span class="chk">✓</span> Live QR Code Generator & Counter Stand Designer</li>
+            <li><span class="chk">✓</span> Printable Acrylic Table Tent Mode (Ctrl + P)</li>
+            <li><span class="chk">✓</span> Private Feedback Intercept CRM Inbox</li>
+          </ul>
+        </div>
+        <div class="btn-group">
+          <a href="https://mickrathod.github.io/reviewbooster-saas/" target="_blank" class="btn-live" style="background: #6366f1;">
+            <span>🚀</span> Launch ReviewBooster Live
+          </a>
+          <a href="https://github.com/mickrathod/reviewbooster-saas" target="_blank" class="btn-repo">
+            <span>💻</span> View GitHub Repository
+          </a>
+        </div>
+      </div>
+
+      <!-- App 6: BookingBolt SaaS -->
+      <div class="saas-card">
+        <div>
+          <div class="card-top">
+            <div class="icon-box icon-booking">📅</div>
+            <div class="live-pill">● GITHUB PAGES LIVE</div>
+          </div>
+          <span class="app-badge-standalone">Micro-SaaS • Scheduling CRM</span>
+          <h2 class="project-name">BookingBolt SaaS</h2>
+          <p class="project-desc">
+            Embeddable 30-second booking widget, live weekly calendar CRM, configurable service catalogs, buffer times, and deposit capture protection.
+          </p>
+          <ul class="features-list">
+            <li><span class="chk">✓</span> 30-Second Customer Booking Widget</li>
+            <li><span class="chk">✓</span> Live Drag-Free Weekly Calendar CRM</li>
+            <li><span class="chk">✓</span> Deposit Capture & WhatsApp Confirmations</li>
+          </ul>
+        </div>
+        <div class="btn-group">
+          <a href="https://mickrathod.github.io/bookingbolt-saas/" target="_blank" class="btn-live" style="background: #10b981;">
+            <span>🚀</span> Launch BookingBolt Live
+          </a>
+          <a href="https://github.com/mickrathod/bookingbolt-saas" target="_blank" class="btn-repo">
+            <span>💻</span> View GitHub Repository
+          </a>
+        </div>
+      </div>
+
+      <!-- App 7: SubscribedOS -->
       <div class="saas-card">
         <div>
           <div class="card-top">
             <div class="icon-box icon-sub">📦</div>
-            <div class="port-pill">● PORT 5178</div>
+            <div class="live-pill">● GITHUB PAGES LIVE</div>
           </div>
-          <span class="app-badge-standalone">Recurring Revenue CRM • subscription-box-manager-react</span>
+          <span class="app-badge-standalone">Micro-SaaS • Recurring Revenue</span>
           <h2 class="project-name">SubscribedOS</h2>
           <p class="project-desc">
             Monthly box theme curation studio, wholesale COGS margin calculator, subscriber fulfillment CRM, and real-time MRR/Churn analytics.
@@ -377,32 +456,14 @@
             <li><span class="chk">✓</span> Real-Time MRR, Churn & LTV Analytics</li>
           </ul>
         </div>
-        <a href="http://localhost:5178/" target="_blank" class="btn-main" style="background: #8b5cf6;">
-          <span>📦</span> Open SubscribedOS (:5178)
-        </a>
-      </div>
-
-      <!-- App 7: ApexDrive 3D -->
-      <div class="saas-card">
-        <div>
-          <div class="card-top">
-            <div class="icon-box icon-drive">🏎️</div>
-            <div class="port-pill">● PORT 5179</div>
-          </div>
-          <span class="app-badge-standalone">Three.js + Cannon-es • bruno-simon-3d-portfolio</span>
-          <h2 class="project-name">ApexDrive 3D</h2>
-          <p class="project-desc">
-            Next-gen 3D physics driving game portfolio with rigid-body dynamics, vehicle suspension, procedural engine audio synthesis, and GPS radar HUD.
-          </p>
-          <ul class="features-list">
-            <li><span class="chk">✓</span> Rigid-Body Bike Dynamics & Drift Physics</li>
-            <li><span class="chk">✓</span> Procedural Web Audio Engine Synthesizer</li>
-            <li><span class="chk">✓</span> Telemetry Speedometer & GPS Radar HUD</li>
-          </ul>
+        <div class="btn-group">
+          <a href="https://mickrathod.github.io/subscribedos-saas/" target="_blank" class="btn-live" style="background: #8b5cf6;">
+            <span>🚀</span> Launch SubscribedOS Live
+          </a>
+          <a href="https://github.com/mickrathod/subscribedos-saas" target="_blank" class="btn-repo">
+            <span>💻</span> View GitHub Repository
+          </a>
         </div>
-        <a href="http://localhost:5179/" target="_blank" class="btn-main" style="background: #ec4899;">
-          <span>🏎️</span> Open ApexDrive 3D (:5179)
-        </a>
       </div>
 
     </div>
