@@ -10,6 +10,8 @@ Each flagship application has its own dedicated GitHub repository and is deploye
 
 | Application | Live Demo URL | Dedicated Source Repository | Tech Stack | Status |
 |:---|:---:|:---:|:---|:---:|
+| 🧊 **CubiX 3D Rubik's Cube** | [**Launch Live App 🚀**](https://mickrathod.github.io/rubiks-cube-3d/) | [mickrathod/rubiks-cube-3d](https://github.com/mickrathod/rubiks-cube-3d) | Three.js, WebGL, Web Audio, WCA Timer | 🟢 **LIVE (200 OK)** |
+| 🥁 **DrumCraft Studio** | [**Launch Live App 🚀**](https://mickrathod.github.io/drumcraft-studio/) | [mickrathod/drumcraft-studio](https://github.com/mickrathod/drumcraft-studio) | React 19, Physical Modeling, 16-Pad MPC | 🟢 **LIVE (200 OK)** |
 | 🎹 **VirtuosoKeys Piano Pro** | [**Launch Live App 🚀**](https://mickrathod.github.io/virtuosokeys-piano/) | [mickrathod/virtuosokeys-piano](https://github.com/mickrathod/virtuosokeys-piano) | React 19, Steinway Harmonics, Synthesia Canvas | 🟢 **LIVE (200 OK)** |
 | 🎸 **AuraStrings Guitar Pro** | [**Launch Live App 🚀**](https://mickrathod.github.io/aurastrings-guitar/) | [mickrathod/aurastrings-guitar](https://github.com/mickrathod/aurastrings-guitar) | React 19, Karplus-Strong DSP, Web Audio | 🟢 **LIVE (200 OK)** |
 | 🎧 **PulseDeck Pro DJ** | [**Launch Live App 🚀**](https://mickrathod.github.io/pulsedeck-pro/) | [mickrathod/pulsedeck-pro](https://github.com/mickrathod/pulsedeck-pro) | React 19, Web Audio API, Canvas 60FPS | 🟢 **LIVE (200 OK)** |
@@ -20,6 +22,8 @@ Each flagship application has its own dedicated GitHub repository and is deploye
 ## 🗂️ Workspace Architecture
 
 ```
+├── rubiks-cube-3d/                    # 🧊 CubiX 3D (Interactive Three.js Rubik's Cube & AI Solver)
+├── drumcraft-studio/                  # 🥁 DrumCraft Studio (Physical Drum Modeling & 16-Pad MPC)
 ├── virtuosokeys-piano/               # 🎹 VirtuosoKeys Piano Pro (Steinway Synthesis & Harmony Academy)
 ├── online-guitar-react/               # 🎸 AuraStrings Guitar Pro (Physical Modeling Synthesizer)
 ├── dj-player-react/                   # 🎧 PulseDeck Pro DJ (Hardware-Grade Performance Console)
