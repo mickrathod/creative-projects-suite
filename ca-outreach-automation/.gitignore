@@ -1,0 +1,8 @@
+whatsapp_session/
+whatsapp_profile/
+*.zip
+.env
+.env.local
+*.log
+.DS_Store
+Thumbs.db

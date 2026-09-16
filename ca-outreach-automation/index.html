@@ -1,0 +1,2972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CA Outreach Command Center - Practice Software Outreach</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --surface: #131b2e;
+      --surface-border: #1e293b;
+      --surface-hover: #1a243d;
+      --accent: #2563eb;
+      --accent-glow: rgba(37, 99, 235, 0.3);
+      --wa-green: #25d366;
+      --wa-dark: #128c7e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --tag-high: #ef4444;
+      --tag-med: #f59e0b;
+      --tag-low: #64748b;
+      --card-radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      padding: 24px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--surface-border);
+    }
+
+    .title-group h1 {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .badge-event {
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--card-radius);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-val {
+      font-size: 28px;
+      font-weight: 700;
+      margin-top: 6px;
+      color: #fff;
+    }
+
+    .stat-val.green { color: var(--wa-green); }
+    .stat-val.blue { color: #60a5fa; }
+    .stat-val.amber { color: #fbbf24; }
+
+    .controls-panel {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--card-radius);
+      padding: 16px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid #334155;
+      padding: 10px 14px;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .search-box input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-group select {
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1e293b;
+      color: #fff;
+      border: 1px solid #334155;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    .btn:hover {
+      background: #334155;
+      border-color: #475569;
+    }
+
+    .btn-export {
+      background: #1e3a8a;
+      border-color: #2563eb;
+    }
+    .btn-export:hover {
+      background: #2563eb;
+    }
+
+    .leads-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 16px;
+    }
+
+    .lead-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--card-radius);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+      position: relative;
+    }
+
+    .lead-card:hover {
+      border-color: #3b82f6;
+      transform: translateY(-2px);
+    }
+
+    .lead-card.status-sent {
+      border-left: 4px solid var(--wa-green);
+      background: #0d1e1f;
+    }
+
+    .lead-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .lead-id {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      background: #0f172a;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+      display: inline-block;
+    }
+
+    .lead-name {
+      font-size: 17px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .lead-designation {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    .priority-tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .priority-High { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .priority-Medium { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .priority-Low { background: rgba(100, 116, 139, 0.2); color: #94a3b8; border: 1px solid rgba(100, 116, 139, 0.3); }
+
+    .lead-details {
+      font-size: 13px;
+      color: #cbd5e1;
+      margin: 8px 0 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .detail-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .detail-icon {
+      color: #64748b;
+      font-size: 13px;
+      width: 16px;
+    }
+
+    .context-box {
+      background: #0b1120;
+      border: 1px dashed #1e293b;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 12px;
+    }
+
+    .message-box {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 12.5px;
+      color: #e2e8f0;
+      margin-bottom: 14px;
+      position: relative;
+      max-height: 120px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      line-height: 1.45;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 1px solid #1e293b;
+    }
+
+    .btn-wa {
+      background: var(--wa-dark);
+      color: #fff;
+      border: none;
+      padding: 9px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+      justify-content: center;
+      transition: background 0.15s ease;
+    }
+
+    .btn-wa:hover {
+      background: var(--wa-green);
+      color: #0b0f19;
+    }
+
+    .btn-wa.disabled {
+      background: #334155;
+      color: #64748b;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .status-select {
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #cbd5e1;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-family: inherit;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .btn-copy {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .btn-copy:hover {
+      background: #334155;
+      color: #fff;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #10b981;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.2s ease;
+      z-index: 1000;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 12px; }
+      .leads-grid { grid-template-columns: 1fr; }
+      .controls-panel { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="title-group">
+        <h1>CA Outreach Command Center <span class="badge-event">Custom Software</span></h1>
+        <p class="subtitle">Personalized Software &amp; Practice Automation Outreach for CA Firms</p>
+      </div>
+      <div>
+        <button class="btn btn-export" onclick="exportUpdatedCSV()">📥 Export Status CSV</button>
+      </div>
+    </header>
+
+    <!-- Statistics Counters -->
+    <div class="stats-bar">
+      <div class="stat-card">
+        <span class="stat-label">Total Leads</span>
+        <span class="stat-val" id="total-count">121</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">High Priority Leads</span>
+        <span class="stat-val blue" id="high-count">--</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Messages Sent</span>
+        <span class="stat-val green" id="sent-count">0</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Pending</span>
+        <span class="stat-val amber" id="pending-count">121</span>
+      </div>
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="controls-panel">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="🔍 Search CA name, firm, city, or Lead ID..." oninput="filterCards()" />
+      </div>
+
+      <div class="filter-group">
+        <select id="priorityFilter" onchange="filterCards()">
+          <option value="ALL">Priority: All</option>
+          <option value="High">Priority: High Only</option>
+          <option value="Medium">Priority: Medium Only</option>
+          <option value="Low">Priority: Low Only</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <select id="statusFilter" onchange="filterCards()">
+          <option value="ALL">Status: All</option>
+          <option value="Pending">Status: Pending Only</option>
+          <option value="Sent">Status: Sent Only</option>
+          <option value="Interested">Status: Interested / Warm</option>
+          <option value="Follow-Up">Status: Follow-Up</option>
+        </select>
+      </div>
+
+      <button class="btn" onclick="resetFilters()">↺ Reset Filters</button>
+    </div>
+
+    <!-- Leads Grid -->
+    <div class="leads-grid" id="leadsGrid"></div>
+  </div>
+
+  <div id="toast" class="toast">Message copied to clipboard!</div>
+
+  <script>
+  const leads = [
+  {
+    "Lead_ID": "LEAD-001",
+    "Name": "CA Nitish Khaitan",
+    "CA_Membership_No": "FCA (Noted)",
+    "Prefix_Designation": "CA / Partner (FCA, LLB, B.Com)",
+    "Firm_Company_Name": "Mittal Khaitan & Co. Chartered Accountants",
+    "Phone_Number": "+91 99688 33037",
+    "Alternative_Phone": "",
+    "Email": "nitishkhaitan@gmail.com",
+    "Website": "",
+    "City_Location": "Ghaziabad (NCR)",
+    "Full_Address": "528, 5th Floor, Signature Global Mall, Sec-3, Vaishali, Ghaziabad, UP - 201010",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Partner at Mittal Khaitan & Co. Visited stall at ICAI AIS Summit 2026. Needs CA practice management software, workflow automation, and client billing/deadline tracking.",
+    "Lead_Source": "Visiting Card Image & WhatsApp Chat",
+    "Reference_File_Or_Message": "IMG-20260626-WA0098.jpg",
+    "Tailored_Business_Outreach_Message": "Hi CA Nitish,\n\nWe build custom, private practice management software for CA firms like Mittal Khaitan & Co. Our systems are engineered to automate client document follow-ups, prevent billing leakage, and track staff billables—without recurring per-user software fees.\n\nWould you be open to a brief 5-minute introductory call this week to see if this aligns with your firm's workflow?"
+  },
+  {
+    "Lead_ID": "LEAD-002",
+    "Name": "CA Yogesh Sovani",
+    "CA_Membership_No": "FCA (Noted)",
+    "Prefix_Designation": "CA / Senior Partner (F.C.A.)",
+    "Firm_Company_Name": "Yogesh Sovani & Associates, Chartered Accountants",
+    "Phone_Number": "+91 98200 80397",
+    "Alternative_Phone": "022-25416138",
+    "Email": "yogesh.sovani@ysa.org.in",
+    "Website": "www.ysa.org.in",
+    "City_Location": "Thane / Mumbai",
+    "Full_Address": "3/301, Janaki Niwas, Dr. Moose Road, Talaopali, Thane (W) - 400 602, Maharashtra",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Senior CA (FCA) running Yogesh Sovani & Associates in Thane/Mumbai. Established firm handling multi-disciplinary audit and taxation. Looking for practice efficiency and digital transformation.",
+    "Lead_Source": "Visiting Card Image & WhatsApp Chat",
+    "Reference_File_Or_Message": "IMG-20260626-WA0104.jpg",
+    "Tailored_Business_Outreach_Message": "Hi CA Yogesh,\n\nWe develop tailored practice management and client workflow platforms for established CA firms like Yogesh Sovani & Associates. We help firms streamline multi-partner task delegation, automate client document intake, and track unbilled hours across audit and tax assignments.\n\nCould we schedule a brief 10-minute call this week to share a quick walkthrough?"
+  },
+  {
+    "Lead_ID": "LEAD-003",
+    "Name": "CA Pushkar Patil",
+    "CA_Membership_No": "FCA (Noted)",
+    "Prefix_Designation": "CA / Partner (B.Com, FCA, CISA (USA))",
+    "Firm_Company_Name": "P. S. Patil & Co. Chartered Accountants",
+    "Phone_Number": "+91 98206 02079",
+    "Alternative_Phone": "",
+    "Email": "ca.pushkar@pspatil.co.in",
+    "Website": "www.pspatil.co.in",
+    "City_Location": "Mumbai",
+    "Full_Address": "2nd Floor, 12/3, Chandrodaya CHS, Swastik Park, Chembur, Mumbai - 400 071",
+    "Category": "Chartered Accountant / IS Audit & Systems",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "FCA & USA Certified Information Systems Auditor (CISA). Strong technical and systems background. Interested in secure, modern software architecture and practice workflow automation.",
+    "Lead_Source": "Visiting Card Image & WhatsApp Chat",
+    "Reference_File_Or_Message": "IMG-20260626-WA0106.jpg",
+    "Tailored_Business_Outreach_Message": "Hi CA Pushkar,\n\nGiven your focus on Information Systems Audit (CISA) and practice management, we develop custom software platforms with enterprise security, role-based controls, and workflow automation at their core.\n\nWe would welcome the opportunity to connect with P. S. Patil & Co. for a brief 10-minute technical walkthrough this week. Are you open to a quick discussion?"
+  },
+  {
+    "Lead_ID": "LEAD-004",
+    "Name": "Vijay Kumar",
+    "CA_Membership_No": "N/A (Corporate Executive)",
+    "Prefix_Designation": "DGM - Accounts & Finance",
+    "Firm_Company_Name": "Nature Pearls Private Limited",
+    "Phone_Number": "+91 80530 29991",
+    "Alternative_Phone": "+91-0130-4091082",
+    "Email": "vijay.kumar@naturepearlsmail.com",
+    "Website": "www.naturepearlsorganic.com",
+    "City_Location": "Sonipat / Panipat, Haryana",
+    "Full_Address": "SCO 7, Emperor Square, TDI City, Kundli, Sonipat, Haryana PIN-131023",
+    "Category": "Corporate Finance / Enterprise (Non-CA)",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "DGM Accounts & Finance. Explicitly noted in chat: 'Non ca in practice / Wanted for non ca company'. Needs corporate financial management, automated accounting workflows, and ERP software.",
+    "Lead_Source": "Visiting Card Image & WhatsApp Chat",
+    "Reference_File_Or_Message": "IMG-20260626-WA0119.jpg",
+    "Tailored_Business_Outreach_Message": "Hi Vijay,\n\nWe develop custom corporate finance and accounts workflow software for manufacturing and trading enterprises like Nature Pearls Private Limited. Our systems streamline ERP data synchronization, automate invoice tracking, and eliminate manual accounting bottlenecks.\n\nWould you be open to a brief 10-minute introductory call this week?"
+  },
+  {
+    "Lead_ID": "LEAD-005",
+    "Name": "Abhimanyu Chhapolia",
+    "CA_Membership_No": "FCA (Noted)",
+    "Prefix_Designation": "FCA, Director",
+    "Firm_Company_Name": "Arthtattva",
+    "Phone_Number": "+91 98800 89889",
+    "Alternative_Phone": "",
+    "Email": "abhimanyu@arthtattva.com",
+    "Website": "",
+    "City_Location": "Bengaluru, Karnataka",
+    "Full_Address": "#85 (Old #21), KH Road, Bengaluru, Karnataka - 560027",
+    "Category": "Financial Advisory / Corporate Practice",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Director at Arthtattva, FCA. High-growth corporate and financial consultancy firm in Bengaluru looking for digital practice and operational software.",
+    "Lead_Source": "Visiting Card Image (Manav Rathod)",
+    "Reference_File_Or_Message": "IMG-20260626-WA0128.jpg, IMG-20260626-WA0129.jpg",
+    "Tailored_Business_Outreach_Message": "Hi Abhimanyu,\n\nWe build custom operational software and client portals for high-growth financial advisory and corporate consultancies like Arthtattva. Whether you need private client collaboration portals or automated compliance tracking, our team engineers solutions tailored to your operational model.\n\nLet me know if you are open to a brief 5-minute call this week."
+  },
+  {
+    "Lead_ID": "LEAD-006",
+    "Name": "CA Jai Prakash Gupta",
+    "CA_Membership_No": "FCA (Noted)",
+    "Prefix_Designation": "CA / Senior Partner (FCA, DISA, FAFD(ICAI), CC-IFRS)",
+    "Firm_Company_Name": "S.C. Bapna & Associates, Chartered Accountants",
+    "Phone_Number": "+91 93140 75824",
+    "Alternative_Phone": "",
+    "Email": "cajpgupta@scbapna.in",
+    "Website": "www.scbapna.in",
+    "City_Location": "Mumbai / Jaipur / Vadodara / New Delhi / Udaipur",
+    "Full_Address": "Multi-city presence across Mumbai, Jaipur, Vadodara, New Delhi, Udaipur",
+    "Category": "Large Multi-City CA Firm",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Senior Partner at major multi-city CA firm. Specializes in forensic audit (FAFD), IFRS, and DISA. High enterprise value lead needing multi-branch workflow consolidation and secure practice management software.",
+    "Lead_Source": "Visiting Card Image (Manav Rathod)",
+    "Reference_File_Or_Message": "IMG-20260627-WA0018.jpg",
+    "Tailored_Business_Outreach_Message": "Hi CA Jai,\n\nManaging cross-office operations across multiple cities requires centralized audit documentation, real-time workflow tracking, and multi-tier partner visibility. We build enterprise practice management platforms engineered specifically for multi-branch CA firms like S.C. Bapna & Associates.\n\nWould your team be open to an executive 10-minute demonstration this week?"
+  },
+  {
+    "Lead_ID": "LEAD-007",
+    "Name": "CA Varun Tiwari",
+    "CA_Membership_No": "CA (Noted)",
+    "Prefix_Designation": "CA / Proprietor",
+    "Firm_Company_Name": "Varun Tiwari & Company, Chartered Accountants",
+    "Phone_Number": "+91 97680 87007",
+    "Alternative_Phone": "022-25934397 / 022-25907919",
+    "Email": "varun@vtnco.in",
+    "Website": "",
+    "City_Location": "Mumbai",
+    "Full_Address": "102, Kalasagar, Above Manav Ethnic, Zaver Road, Mulund (West), Mumbai - 400 080",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Proprietor of CA firm in Mulund, Mumbai. Looking for modern software to handle client management, billings, and compliance tasks.",
+    "Lead_Source": "Visiting Card Image (Manav Rathod)",
+    "Reference_File_Or_Message": "IMG-20260627-WA0021.jpg",
+    "Tailored_Business_Outreach_Message": "Hi CA Varun,\n\nWe build modern practice management and client billing software tailored for CA firms like Varun Tiwari & Company—simplifying GST/IT compliance tracking, client document collection, and staff task management without spreadsheet complexity.\n\nWould you be open to a brief 5-minute demo this week to see how it works?"
+  },
+  {
+    "Lead_ID": "LEAD-008",
+    "Name": "CA Rishi Agrawal",
+    "CA_Membership_No": "CA (Noted)",
+    "Prefix_Designation": "CA / Partner (CA, LL.B., B.Com)",
+    "Firm_Company_Name": "Rishi Agrawal & Associates, Chartered Accountants",
+    "Phone_Number": "+91 98198 69366",
+    "Alternative_Phone": "",
+    "Email": "rkagrawalandassociates@gmail.com",
+    "Website": "",
+    "City_Location": "Mumbai",
+    "Full_Address": "102, Kala Sagar, Zaver Road, Mulund (West), Mumbai - 400 080",
+    "Category": "Chartered Accountant / Legal & Tax Practice",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Chartered Accountant & Advocate in Mumbai. Dual practice requiring case/matter tracking, statutory deadline management, and automated client communication.",
+    "Lead_Source": "Visiting Card Image (Manav Rathod)",
+    "Reference_File_Or_Message": "IMG-20260627-WA0022.jpg, IMG-20260627-WA0023.jpg",
+    "Tailored_Business_Outreach_Message": "Hi CA Rishi,\n\nWe develop custom workflow software for combined CA and legal practices like Rishi Agrawal & Associates. Our platform unifies matter/case tracking, statutory filing deadlines, and client billing into a single, secure dashboard.\n\nCould we schedule a short 10-minute call this week to share an overview?"
+  },
+  {
+    "Lead_ID": "LEAD-009",
+    "Name": "CA Jitendra Dave",
+    "CA_Membership_No": "FCA (Noted)",
+    "Prefix_Designation": "CA / Managing Partner (MBA, FCA)",
+    "Firm_Company_Name": "Jitendra Dave & Associates, Chartered Accountants",
+    "Phone_Number": "+91 97256 40701",
+    "Alternative_Phone": "+91 63518 05467",
+    "Email": "ca@jitendradave.com",
+    "Website": "www.JitendraDave.com",
+    "City_Location": "Ahmedabad, Gujarat",
+    "Full_Address": "512, Shreeya Amalga, Opp. Avalon Hotel, Sindhu Bhavan Road, Thaltej, Ahmedabad - 380059",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Prominent CA firm in Ahmedabad (Sindhu Bhavan Road). Looking for practice automation and modern software tools to optimize audit and tax client management.",
+    "Lead_Source": "Visiting Card (PDF screenshot in chat)",
+    "Reference_File_Or_Message": "IMG-20260627-WA0030.jpg",
+    "Tailored_Business_Outreach_Message": "Hi CA Jitendra,\n\nWe engineer custom practice management software for leading CA firms like Jitendra Dave & Associates. We help managing partners automate staff task allocation, track unbilled work, and streamline client communication from one dashboard.\n\nWould you be open to a brief 10-minute walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-010",
+    "Name": "CA Ashok Parashar",
+    "CA_Membership_No": "FCA (Noted)",
+    "Prefix_Designation": "CA / Managing Partner (B.Com, FCA)",
+    "Firm_Company_Name": "APJA And Associates, Chartered Accountants",
+    "Phone_Number": "+91 98919 81558",
+    "Alternative_Phone": "+91 9711150907 / +91 120 425 7765",
+    "Email": "ashok.parashar@apja.in",
+    "Website": "www.apja.in",
+    "City_Location": "Delhi / Noida / NCR",
+    "Full_Address": "Offices in Delhi NCR (Website: www.apja.in)",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Managing Partner at APJA & Associates. Multi-partner firm requiring team delegation, time tracking, and automated client filing alerts.",
+    "Lead_Source": "Visiting Card Image (Manav Rathod)",
+    "Reference_File_Or_Message": "IMG-20260627-WA0036.jpg, IMG-20260627-WA0041.jpg",
+    "Tailored_Business_Outreach_Message": "Hi CA Ashok,\n\nWe specialize in building bespoke practice management systems for multi-partner CA firms like APJA & Associates. Our software enables real-time team delegation, automated compliance tracking, and fee recovery controls without per-seat subscription lock-in.\n\nCould we arrange a 10-minute introductory demo for your team this week?"
+  },
+  {
+    "Lead_ID": "LEAD-011",
+    "Name": "CA Abhishek R.V.",
+    "CA_Membership_No": "CA (Noted)",
+    "Prefix_Designation": "CA / Founder & CEO",
+    "Firm_Company_Name": "Dynamic International Consultants / Dynamic Catalyst Consultants",
+    "Phone_Number": "+971 58 551 8949",
+    "Alternative_Phone": "+968 7837 8949",
+    "Email": "abhishekrv@dynamicbsllc.com",
+    "Website": "www.dynamicbsllc.com",
+    "City_Location": "Dubai (UAE) / Muscat (Oman)",
+    "Full_Address": "Offices in Dubai (UAE) and Oman",
+    "Category": "Large International CA & Advisory Enterprise",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Founder & CEO of international advisory firm. Explicitly noted in chat: 'Dubai based ca / 200+ team members'. Massive enterprise lead requiring scalable multi-country practice automation and team management software.",
+    "Lead_Source": "Visiting Card Image & WhatsApp Chat",
+    "Reference_File_Or_Message": "IMG-20260627-WA0037.jpg",
+    "Tailored_Business_Outreach_Message": "Hi CA Abhishek,\n\nManaging a team of 200+ professionals across Dubai and Oman requires scalable, enterprise-grade workflow architecture. We engineer custom practice management systems for large advisory firms—complete with multi-tier approval hierarchies, role-based visibility, and automated billing.\n\nWould your executive team be open to a brief 10-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-012",
+    "Name": "CA C.V. Sravan Kumar",
+    "CA_Membership_No": "CA (Noted)",
+    "Prefix_Designation": "CA / Partner",
+    "Firm_Company_Name": "Ananda Kumar Associates, Chartered Accountants",
+    "Phone_Number": "+91 98404 25128",
+    "Alternative_Phone": "",
+    "Email": "sravan@anandakumar.in",
+    "Website": "",
+    "City_Location": "Chennai, Tamil Nadu",
+    "Full_Address": "'Chavalas', AH-91 (old No. 205), 3rd St, 8th Main Rd, Annanagar, Chennai - 600040",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA Partner at Ananda Kumar Associates in Chennai. Looking for streamlined cloud practice management and automated client workflow software.",
+    "Lead_Source": "Visiting Card Image & WhatsApp Chat",
+    "Reference_File_Or_Message": "IMG-20260627-WA0055.jpg",
+    "Tailored_Business_Outreach_Message": "Hi CA C.V.,\n\nWe develop custom practice management software for CA firms like Ananda Kumar Associates—enabling automated client document collection, deadline tracking, and team timesheets without chaotic spreadsheets.\n\nWould you be open to a quick 5-minute call this week to see how it works?"
+  },
+  {
+    "Lead_ID": "LEAD-013",
+    "Name": "Manek Narang",
+    "CA_Membership_No": "CA (Noted)",
+    "Prefix_Designation": "CA / Director (CA, MBA: MDI-Gurgaon)",
+    "Firm_Company_Name": "Alphas Konsulting",
+    "Phone_Number": "+91 98105 96225",
+    "Alternative_Phone": "",
+    "Email": "manek@alphaskonsulting.com",
+    "Website": "www.alphaskonsulting.com",
+    "City_Location": "Gurugram, Haryana",
+    "Full_Address": "9th Floor, SAS Tower, Adj. Medanta, Sec 38, Gurugram, Haryana - 122001",
+    "Category": "Financial Advisory / Credit Rating",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Director at Alphas Konsulting. Chat note: 'Very much Convinced and has a team size of 6 give him demo'. Highly qualified, requested demo for his team.",
+    "Lead_Source": "Visiting Card Image & WhatsApp Chat",
+    "Reference_File_Or_Message": "IMG-20260627-WA0068.jpg",
+    "Tailored_Business_Outreach_Message": "Hi Manek,\n\nWe build tailored workflow and client management software designed specifically to streamline project pipelines and client document tracking for advisory teams like Alphas Konsulting.\n\nCould we schedule a brief 10-minute walkthrough this week to share a prototype?"
+  },
+  {
+    "Lead_ID": "LEAD-014",
+    "Name": "CA Ravi Ranjan",
+    "CA_Membership_No": "FCA (Noted)",
+    "Prefix_Designation": "CA / Managing Partner (B.Com (H) Gold Medalist, F.C.A., L.C.S.)",
+    "Firm_Company_Name": "Agarwal & Ranjan Chartered Accountants / Dynovative Group",
+    "Phone_Number": "+91 99532 69921",
+    "Alternative_Phone": "011-49536999",
+    "Email": "ravi.ranjan@caara.co.in",
+    "Website": "www.caara.co.in",
+    "City_Location": "New Delhi",
+    "Full_Address": "522, Somdutt Chambers II, Bhikaji Cama Place, New Delhi - 110066",
+    "Category": "Chartered Accountant / Corporate Consulting",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Managing Partner & Director. Chat note: 'Wants demo immediately'. High priority warm lead for immediate software onboarding and practice management.",
+    "Lead_Source": "Visiting Card Image & WhatsApp Chat",
+    "Reference_File_Or_Message": "IMG-20260627-WA0070.jpg",
+    "Tailored_Business_Outreach_Message": "Hi CA Ravi,\n\nWe build dedicated practice management and workflow tracking software for CA firms like Agarwal & Ranjan—streamlining compliance pipelines, staff billables, and client document collection.\n\nCould we arrange a brief 10-minute call this week to discuss your requirements?"
+  },
+  {
+    "Lead_ID": "LEAD-015",
+    "Name": "Jai S Bohra",
+    "CA_Membership_No": "N/A (Tech Entrepreneur)",
+    "Prefix_Designation": "Partner / Founder",
+    "Firm_Company_Name": "A21 Technologies LLP",
+    "Phone_Number": "+91 98292 16435",
+    "Alternative_Phone": "",
+    "Email": "jai@a21technologies.com",
+    "Website": "",
+    "City_Location": "Rajasthan / India",
+    "Full_Address": "An Innovative Platform for Business Technology Leveraging",
+    "Category": "Technology Partner / Business Scaling",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Tech platform founder. Chat note: 'Helping companies to scale / If we needed'. Strategic software partner / tech collaboration opportunity.",
+    "Lead_Source": "Visiting Card Image & WhatsApp Chat",
+    "Reference_File_Or_Message": "IMG-20260627-WA0090.jpg",
+    "Tailored_Business_Outreach_Message": "Hi Jai,\n\nWe engineer high-performance custom software, workflow automation tools, and API integrations for scaling businesses. We would welcome exploring potential technology synergy with A21 Technologies.\n\nLet me know if you are open to a brief introductory discussion this week."
+  },
+  {
+    "Lead_ID": "LEAD-016",
+    "Name": "Aneesh Mishra",
+    "CA_Membership_No": "N/A (Vendor)",
+    "Prefix_Designation": "Stall Vendor / Contractor",
+    "Firm_Company_Name": "Exhibition & Stall Fabrication Services",
+    "Phone_Number": "+91 99875 97420",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR / Mumbai",
+    "Full_Address": "",
+    "Category": "Vendor / Event Infrastructure",
+    "Lead_Priority": "Low",
+    "Key_Requirements_And_Context": "Stall vendor / exhibition contractor who fabricated stall at ICAI AIS Summit 2026.",
+    "Lead_Source": "vCard File (.vcf)",
+    "Reference_File_Or_Message": "ANEESH MISHRA Stall Vendor.vcf",
+    "Tailored_Business_Outreach_Message": "Hi Aneesh,\n\nWe develop custom software, project tracking, and billing applications for businesses. If your fabrication or event infrastructure operations ever require tailored internal tools, feel free to connect."
+  },
+  {
+    "Lead_ID": "LEAD-017",
+    "Name": "Ravi Borada",
+    "CA_Membership_No": "Not Specified",
+    "Prefix_Designation": "AIS Delegate",
+    "Firm_Company_Name": "ICAI AIS Summit Delegate",
+    "Phone_Number": "+91 99093 76574",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Gujarat",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / AIS Delegate",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "ICAI AIS Summit 2026 delegate. Connected via vCard at the summit.",
+    "Lead_Source": "vCard File (.vcf)",
+    "Reference_File_Or_Message": "Ravi Borada ais.vcf",
+    "Tailored_Business_Outreach_Message": "Hi Ravi,\n\nWe develop modern practice management and workflow automation software for CA professionals—helping firms eliminate manual follow-ups, organize client files, and stop billing leakage.\n\nWould you be open to a brief 5-minute call this week?"
+  },
+  {
+    "Lead_ID": "LEAD-018",
+    "Name": "CA Imran",
+    "CA_Membership_No": "CA",
+    "Prefix_Designation": "CA / Managing Partner",
+    "Firm_Company_Name": "Chartered Accountants Firm (200+ Staff)",
+    "Phone_Number": "+91 75009 00699",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "India",
+    "Full_Address": "",
+    "Category": "Large CA Enterprise (200+ Staff)",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Explicitly noted in chat: 'CA Imran (over 200+ staff not using any pms just need to convince him)'. Massive enterprise deal! Needs custom practice management, employee task allocation, and automated reporting.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 3:37 pm [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi CA Imran,\n\nManaging a 200+ member professional practice without dedicated custom software creates substantial hidden administrative costs in task follow-ups and unbilled hours. We engineer enterprise practice management platforms designed specifically for large accounting practices—providing complete partner visibility, automated task allocation, and revenue leakage controls.\n\nCould we arrange a brief 10-minute demonstration for your leadership team this week?"
+  },
+  {
+    "Lead_ID": "LEAD-019",
+    "Name": "Parag & Akshay (Secretary)",
+    "CA_Membership_No": "Valuation Specialist",
+    "Prefix_Designation": "Director / Lead Valuer",
+    "Firm_Company_Name": "Fair Valuation",
+    "Phone_Number": "+91 90281 34943",
+    "Alternative_Phone": "",
+    "Email": "jai@fairvaluation.com, Pranali@fairvaluation.com, Associate@fairvaluation.com",
+    "Website": "www.fairvaluation.com",
+    "City_Location": "Pune, Maharashtra",
+    "Full_Address": "Pune, Maharashtra",
+    "Category": "Business Valuation / Advisory Firm",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Explicitly requested demo: 'Schedule a demo Wed 2pm / Parag / Pune / 9028134943 - akshay parag's secretary'. Multiple team emails provided.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 11:49 am [Rutvik Bhil]",
+    "Tailored_Business_Outreach_Message": "Hi Parag & Akshay,\n\nWe develop custom workflow tracking, valuation document automation, and client collaboration software for valuation and advisory practices like Fair Valuation.\n\nCould we schedule a brief 10-minute walkthrough this week to show you how our system organizes project pipelines and client deliverables?"
+  },
+  {
+    "Lead_ID": "LEAD-020",
+    "Name": "CA Ishwar Jivani",
+    "CA_Membership_No": "CA",
+    "Prefix_Designation": "CA / Partner",
+    "Firm_Company_Name": "Chartered Accountants Firm",
+    "Phone_Number": "+91 81716 72191",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Gujarat / NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Explicitly noted in chat: 'CA Ishwar jivani / Need Demo On Monday'. Priority follow-up required.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 4:21 pm [+91 70698 58458]",
+    "Tailored_Business_Outreach_Message": "Hi CA Ishwar,\n\nWe build dedicated practice management software that helps CA firms automate daily task allocation, client document requests, and billing without spreadsheet overhead.\n\nWould you be open to a brief 5-minute demo this week to see how it works for your firm?"
+  },
+  {
+    "Lead_ID": "LEAD-021",
+    "Name": "Fenil Mehta",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Practice Lead",
+    "Firm_Company_Name": "Chartered Accountants Firm",
+    "Phone_Number": "+91 90337 22482",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Rajkot, Gujarat",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Explicitly noted in chat: 'Fenil mehta / Rajkot / All convinced free trial set up to be done immediately'. Immediate setup required.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 2:00 pm [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi Fenil,\n\nWe develop custom practice management software for CA firms in Rajkot to automate recurring compliance workflows, client document intake, and staff productivity tracking.\n\nCould we schedule a brief 10-minute call this week to set up a walkthrough for your firm?"
+  },
+  {
+    "Lead_ID": "LEAD-022",
+    "Name": "CA Dolly",
+    "CA_Membership_No": "CA",
+    "Prefix_Designation": "CA / Practice Head",
+    "Firm_Company_Name": "Chartered Accountants Firm",
+    "Phone_Number": "+91 98733 47878",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / Multi-Client Practice",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Explicitly noted in chat: 'Ca dolly / Delhi / Wanted for her 2 3 clients and want trial demo set up'. High intent for client rollout.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 12:05 pm [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi CA Dolly,\n\nWe build custom workflow software for CA practices, including branded client portals that make document collection seamless for corporate clients.\n\nWould you be open to a brief 5-minute demo this week to explore how this can streamline your client management?"
+  },
+  {
+    "Lead_ID": "LEAD-023",
+    "Name": "Chakravarti More (Chakravarthy Mory)",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Practice Lead",
+    "Firm_Company_Name": "Chartered Accountants Firm",
+    "Phone_Number": "+91 93368 24980",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "India",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / Dissatisfied with Competitor",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Explicitly noted in chat: 'He is using some other software and not satisfied with that'. Prime switch candidate ready to migrate to better custom software.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 12:19 pm & 27/06/2026, 1:46 pm",
+    "Tailored_Business_Outreach_Message": "Hi Chakravarti,\n\nMany CA firms find that generic off-the-shelf software is too rigid or expensive with recurring per-user fees. We build lightweight, custom practice management systems tailored 1:1 to how your firm actually operates—giving you full control over tasks, client docs, and billing.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-024",
+    "Name": "Nishkarsh Goyal",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Partner",
+    "Firm_Company_Name": "Chartered Accountants Firm",
+    "Phone_Number": "+91 98584 23000",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "India",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Explicitly noted in chat: 'He was very convinced and liked the software and revenue Lekeage part'. Strong interest in billing and revenue leakage features.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 11:22 am [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi Nishkarsh,\n\nStopping revenue leakage and tracking unbilled work is a major operational challenge for growing CA firms. Our custom practice management platforms provide partners with complete bill-flow visibility and automatic unbilled hours tracking.\n\nCould we schedule a brief 5-minute walkthrough this week to show you how it works?"
+  },
+  {
+    "Lead_ID": "LEAD-025",
+    "Name": "Jainam Shah",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Practice Lead",
+    "Firm_Company_Name": "Chartered Accountants Firm",
+    "Phone_Number": "+91 73834 39645",
+    "Alternative_Phone": "+91 94084 44488",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Ahmedabad, Gujarat",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / Integration Needs",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Explicitly noted in chat: 'whatsapp intergratuon / gst it notice integration'. Needs direct WhatsApp alerts for clients and automated GST/IT notice tracking.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 3:27 pm & 27/06/2026, 2:26 pm",
+    "Tailored_Business_Outreach_Message": "Hi Jainam,\n\nWe build custom software for CA firms that integrates native WhatsApp messaging and automated GST & IT notice tracking directly into your practice workflow. This eliminates manual client chasing and ensures zero missed deadlines.\n\nWould you be open to a brief 5-minute call this week to see a quick demo?"
+  },
+  {
+    "Lead_ID": "LEAD-026",
+    "Name": "Sumit Vijay Vargiy",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Practice Head",
+    "Firm_Company_Name": "Chartered Accountants Firm",
+    "Phone_Number": "+91 99282 12499",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Rajasthan",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Explicitly noted in chat: 'rly intestes in software need tuesday'. Urgent follow-up requested for Tuesday.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 5:21 pm [+91 84601 04757]",
+    "Tailored_Business_Outreach_Message": "Hi Sumit,\n\nWe engineer custom software for CA firms to organize daily workflows, automate recurring compliance reminders, and track staff billables effortlessly.\n\nWhen would be a convenient time for a brief 5-minute call this week?"
+  },
+  {
+    "Lead_ID": "LEAD-027",
+    "Name": "Yogi Sachin",
+    "CA_Membership_No": "Finance Consultant",
+    "Prefix_Designation": "Real Estate Finance Consultant",
+    "Firm_Company_Name": "Real Estate Finance Practice",
+    "Phone_Number": "+91 99112 29051",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Real Estate Finance & Advisory",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Explicitly noted in chat: 'Yogi sachin (real estate finance) / Asked for a custom demo we need to reach/ follow up with him after 2-3 day'.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 5:20 pm [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi Yogi,\n\nWe build custom workflow software for real estate finance and advisory firms to track deal pipelines, investor documentation, and compliance milestones in one centralized dashboard.\n\nWould you be open to a brief 10-minute introductory call this week?"
+  },
+  {
+    "Lead_ID": "LEAD-028",
+    "Name": "Aarav Mahajan",
+    "CA_Membership_No": "Investment Banker",
+    "Prefix_Designation": "Investment Banker / Corporate Advisor",
+    "Firm_Company_Name": "Investment Banking Practice",
+    "Phone_Number": "+91 99718 00764",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Investment Banking / Fundraising Collaboration",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Explicitly noted in chat: 'Aarav Mahajan (investment banking person asked for collaboration for fund raise)'. Potential strategic investor / fundraising partner.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 4:02 pm [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi Aarav,\n\nWe engineer custom enterprise software platforms and workflow automation systems for investment banking and advisory firms. We would welcome exploring potential technology synergies or co-building opportunities.\n\nLet me know if you are open to a brief call this week."
+  },
+  {
+    "Lead_ID": "LEAD-029",
+    "Name": "CA Abhishek",
+    "CA_Membership_No": "CA",
+    "Prefix_Designation": "CA / Practice Lead",
+    "Firm_Company_Name": "Chartered Accountants Firm",
+    "Phone_Number": "+91 94282 52476",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Gujarat",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Explicitly noted in chat: 'He is very much convinced, he is more interested in chat'. Highly interested in client chat and communication automation.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 2:28 pm [+91 70698 58458]",
+    "Tailored_Business_Outreach_Message": "Hi CA Abhishek,\n\nIntegrating automated client chat and WhatsApp workflows directly into a CA firm's task pipeline saves hours of daily follow-up overhead. We build custom software solutions engineered specifically around this workflow.\n\nWould you be open to a quick 5-minute demo this week?"
+  },
+  {
+    "Lead_ID": "LEAD-030",
+    "Name": "R Bhargav & Associates",
+    "CA_Membership_No": "CA Firm",
+    "Prefix_Designation": "CA / Managing Partner",
+    "Firm_Company_Name": "R Bhargav & Associates, Chartered Accountants",
+    "Phone_Number": "+91 88817 99763",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "India",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / Renewal Pipeline",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Explicitly noted in chat: 'He seems interested but currently using one paid service so maybe after his subscription ends'. Keep warm for subscription switch.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 1:18 pm [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi R,\n\nMany CA firms switch to our custom practice platform when their annual software renewal approaches because of our clean interface, revenue leakage tracking, and zero recurring per-user license fees.\n\nLet me know if you would like a brief 5-minute overview to compare options for R Bhargav & Associates."
+  },
+  {
+    "Lead_ID": "LEAD-031",
+    "Name": "Rahul Jain (Rice Business Lead)",
+    "CA_Membership_No": "Corporate Owner",
+    "Prefix_Designation": "Business Owner",
+    "Firm_Company_Name": "Agro-Commodity & Rice Trading Enterprise",
+    "Phone_Number": "+91 81038 65444",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi",
+    "Full_Address": "",
+    "Category": "Corporate Trade / Agri-Business",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Explicitly noted in chat: 'Rahul Jain (rice guy from Delhi)'. Business owner looking for custom business and accounting software solutions.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 5:22 pm & 27/06/2026, 11:37 am",
+    "Tailored_Business_Outreach_Message": "Hi Rahul,\n\nWe develop custom enterprise software, inventory/trade trackers, and automated financial management tools for commodity trading businesses. If you are exploring custom software to streamline your operations, we would be glad to connect for a brief discussion."
+  },
+  {
+    "Lead_ID": "LEAD-032",
+    "Name": "CA Rohit Bansal",
+    "CA_Membership_No": "CA",
+    "Prefix_Designation": "CA / Partner",
+    "Firm_Company_Name": "Chartered Accountants Firm",
+    "Phone_Number": "+91 96546 79681",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Explicitly noted in chat: 'Ca rohit bansal / Look like he is very interested'. Warm lead for practice software.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 11:55 am [+91 70698 58458]",
+    "Tailored_Business_Outreach_Message": "Hi CA Rohit,\n\nWe build custom practice management software that provides CA partners with complete real-time clarity over filing deadlines, staff workload, and unbilled hours.\n\nWould you be open to a brief 5-minute walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-033",
+    "Name": "Raghav (Radhav) Mittal",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Practice Lead",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 85108 00021",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Gurgaon (Gurugram), Haryana",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Explicitly noted in chat: 'Radhav mittal / Potential client but need to convince him / Gudgaav guy'. Needs consultative value-focused outreach.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 6:47 pm [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi Raghav,\n\nWe design lightweight CA practice software that requires zero learning curve and saves 5+ hours weekly per staff member on routine compliance tracking and document collection.\n\nWould you be open to a brief 5-minute demo this week?"
+  },
+  {
+    "Lead_ID": "LEAD-034",
+    "Name": "CA Anil Gupta",
+    "CA_Membership_No": "CA",
+    "Prefix_Designation": "CA / Senior Partner",
+    "Firm_Company_Name": "Chartered Accountants Firm",
+    "Phone_Number": "+91 97930 89336",
+    "Alternative_Phone": "",
+    "Email": "a.k.g1307@gmail.com",
+    "Website": "",
+    "City_Location": "Gorakhpur, Uttar Pradesh",
+    "Full_Address": "Gorakhpur, UP",
+    "Category": "Chartered Accountant / Regional Firm",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Shared both phone and email at stall: 'a.k.g1307@gmail.com / 97930893366 / Anil Gupta / Gorakhpur'. High intent for regional CA firm practice digitization.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 10:47 am [Rutvik Bhil]",
+    "Tailored_Business_Outreach_Message": "Hi CA Anil,\n\nWe build dedicated practice management software that helps regional CA firms streamline GST, audit, and tax compliance tasks without spreadsheet chaos.\n\nWould you be open to a brief 5-minute walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-035",
+    "Name": "Piyush Rughani",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 98203 23145",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Mumbai",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026. Looking for practice management and workflow software.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 9:01 am [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi Piyush,\n\nWe specialize in custom software for CA firms in Mumbai to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-036",
+    "Name": "Charudatta Marathe",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 93714 32369",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Maharashtra",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 9:28 am [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi Charudatta,\n\nWe build custom, private practice management software for CA firms in Maharashtra—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-037",
+    "Name": "Ashok",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 98183 33365",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 9:41 am [Danish Memon]",
+    "Tailored_Business_Outreach_Message": "Hi Ashok,\n\nWe develop tailored workflow software for CA practices in Delhi NCR to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-038",
+    "Name": "Vimal Pundir",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 97115 16400",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Met at ICAI AIS Summit 2026 (Selfie taken at stall). Interested in practice modernization.",
+    "Lead_Source": "WhatsApp Chat Lead & Photo",
+    "Reference_File_Or_Message": "IMG-20260626-WA0032.jpg",
+    "Tailored_Business_Outreach_Message": "Hi Vimal,\n\nMost generic CA software is either overly rigid or charges recurring fees per user. We build custom practice management platforms tailored directly to your firm's internal workflow—giving partners complete visibility over staff tasks and unbilled work.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-039",
+    "Name": "Parag Garg",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 97167 76727",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 9:56 am [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi Parag,\n\nWe specialize in custom software for CA firms in Delhi NCR to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-040",
+    "Name": "Suhani",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 84540 83309",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Mumbai",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 10:11 am [Rutvik Bhil]",
+    "Tailored_Business_Outreach_Message": "Hi Suhani,\n\nWe build custom, private practice management software for CA firms in Mumbai—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-041",
+    "Name": "Harsh",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 92658 25230",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Gujarat / NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Met at stall (Photo: IMG-20260626-WA0045.jpg).",
+    "Lead_Source": "WhatsApp Chat Lead & Photo",
+    "Reference_File_Or_Message": "IMG-20260626-WA0045.jpg",
+    "Tailored_Business_Outreach_Message": "Hi Harsh,\n\nWe develop tailored workflow software for CA practices in Gujarat to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-042",
+    "Name": "Tripti",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 81711 60264",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR / UP",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Met at stall (Photo: IMG-20260626-WA0049.jpg).",
+    "Lead_Source": "WhatsApp Chat Lead & Photo",
+    "Reference_File_Or_Message": "IMG-20260626-WA0049.jpg",
+    "Tailored_Business_Outreach_Message": "Hi Tripti,\n\nMost generic CA software is either overly rigid or charges recurring fees per user. We build custom practice management platforms tailored directly to your firm's internal workflow—giving partners complete visibility over staff tasks and unbilled work.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-043",
+    "Name": "Prathambhai",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 98735 87092",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 10:50 am [+91 70698 58458]",
+    "Tailored_Business_Outreach_Message": "Hi Pratham,\n\nWe specialize in custom software for CA firms in Delhi NCR to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-044",
+    "Name": "Vishnu Singh",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 70117 91587",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Met at stall (Photo: IMG-20260626-WA0055.jpg).",
+    "Lead_Source": "WhatsApp Chat Lead & Photo",
+    "Reference_File_Or_Message": "IMG-20260626-WA0055.jpg",
+    "Tailored_Business_Outreach_Message": "Hi Vishnu,\n\nWe build custom, private practice management software for CA firms in Delhi NCR—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-045",
+    "Name": "Delegate Lead (93504 54545)",
+    "CA_Membership_No": "CA / Delegate",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Firm",
+    "Phone_Number": "+91 93504 54545",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Connected at stall with Aamir Dholia (Photo: IMG-20260626-WA0062.jpg).",
+    "Lead_Source": "WhatsApp Chat Lead & Photo",
+    "Reference_File_Or_Message": "IMG-20260626-WA0062.jpg",
+    "Tailored_Business_Outreach_Message": "Hello,\n\nWe develop tailored workflow software for CA practices in Delhi NCR to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-046",
+    "Name": "CA Dr. Sandip Purva",
+    "CA_Membership_No": "FCA / Ph.D.",
+    "Prefix_Designation": "CA / Senior Academic & Practicing CA",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 92555 32788",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Haryana / NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / Academic & Practicing",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Senior CA / Ph.D. met at summit. Highly influential practitioner.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 11:27 am [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi CA Dr. Sandip,\n\nWe engineer modern, secure practice management software designed to automate compliance workflows, audit trails, and practice analytics for established CA firms.\n\nWe would welcome the opportunity to share a brief 10-minute walkthrough with your team this week."
+  },
+  {
+    "Lead_ID": "LEAD-047",
+    "Name": "Rakeshji",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 99532 11395",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Met at stall (Photo: IMG-20260626-WA0073.jpg).",
+    "Lead_Source": "WhatsApp Chat Lead & Photo",
+    "Reference_File_Or_Message": "IMG-20260626-WA0073.jpg",
+    "Tailored_Business_Outreach_Message": "Hi Rakesh,\n\nWe specialize in custom software for CA firms in Delhi NCR to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-048",
+    "Name": "Mahadev Indrachand Rathi",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 93765 80673",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Gujarat",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 11:50 am [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi Mahadev,\n\nWe build custom, private practice management software for CA firms in Gujarat—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-049",
+    "Name": "Jatin",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 97809 82802",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Punjab / Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Met at stall (Photo: IMG-20260626-WA0078.jpg).",
+    "Lead_Source": "WhatsApp Chat Lead & Photo",
+    "Reference_File_Or_Message": "IMG-20260626-WA0078.jpg",
+    "Tailored_Business_Outreach_Message": "Hi Jatin,\n\nWe develop tailored workflow software for CA practices in Punjab to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-050",
+    "Name": "Rakesh Bansal",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 98038 15225",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Punjab / NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 11:58 am [Danish Memon]",
+    "Tailored_Business_Outreach_Message": "Hi Rakesh,\n\nMost generic CA software is either overly rigid or charges recurring fees per user. We build custom practice management platforms tailored directly to your firm's internal workflow—giving partners complete visibility over staff tasks and unbilled work.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-051",
+    "Name": "Aagam Shah",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 79775 14590",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Mumbai, Maharashtra",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate from Mumbai met at ICAI AIS Summit 2026 (noted twice by team).",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 12:03 pm & 27/06/2026, 1:02 pm",
+    "Tailored_Business_Outreach_Message": "Hi Aagam,\n\nWe specialize in custom software for CA firms in Mumbai, Maharashtra to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-052",
+    "Name": "Rakshesh Shah",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 97250 59103",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Gujarat",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Met at stall (Photo: IMG-20260626-WA0080.jpg).",
+    "Lead_Source": "WhatsApp Chat Lead & Photo",
+    "Reference_File_Or_Message": "IMG-20260626-WA0080.jpg",
+    "Tailored_Business_Outreach_Message": "Hi Rakshesh,\n\nWe build custom, private practice management software for CA firms in Gujarat—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-053",
+    "Name": "Tamanna",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 87250 44743",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Punjab / Chandigarh",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 12:26 pm [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi Tamanna,\n\nWe develop tailored workflow software for CA practices in Punjab to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-054",
+    "Name": "Mrityunjay Singh",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 98925 59106",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Mumbai",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 12:31 pm [+91 70698 58458]",
+    "Tailored_Business_Outreach_Message": "Hi Mrityunjay,\n\nMost generic CA software is either overly rigid or charges recurring fees per user. We build custom practice management platforms tailored directly to your firm's internal workflow—giving partners complete visibility over staff tasks and unbilled work.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-055",
+    "Name": "Ravi Purohit",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 80803 62893",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Mumbai / Maharashtra",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026 (noted from Mumbai).",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 12:36 pm & 27/06/2026, 11:53 am",
+    "Tailored_Business_Outreach_Message": "Hi Ravi,\n\nWe specialize in custom software for CA firms in Mumbai to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-056",
+    "Name": "Sonu",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 76661 67094",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Mumbai / Maharashtra",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Connected with Manav Rathod at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 12:39 pm [Manav Rathod]",
+    "Tailored_Business_Outreach_Message": "Hi Sonu,\n\nWe build custom, private practice management software for CA firms in Mumbai—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-057",
+    "Name": "Sachinbhai",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 98888 18824",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Punjab / NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Met at stall (Photo: IMG-20260626-WA0090.jpg).",
+    "Lead_Source": "WhatsApp Chat Lead & Photo",
+    "Reference_File_Or_Message": "IMG-20260626-WA0090.jpg",
+    "Tailored_Business_Outreach_Message": "Hi Sachin,\n\nWe develop tailored workflow software for CA practices in Punjab to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-058",
+    "Name": "Mehal",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 99920 09063",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Haryana / NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 12:54 pm [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi Mehal,\n\nMost generic CA software is either overly rigid or charges recurring fees per user. We build custom practice management platforms tailored directly to your firm's internal workflow—giving partners complete visibility over staff tasks and unbilled work.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-059",
+    "Name": "Dhaval Radia",
+    "CA_Membership_No": "Finance Specialist",
+    "Prefix_Designation": "Finance Professional",
+    "Firm_Company_Name": "Finance Advisory Practice",
+    "Phone_Number": "+91 98268 37899",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi",
+    "Full_Address": "Delhi",
+    "Category": "Finance Advisory & Consulting",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Finance consultant from Delhi met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 1:33 pm [+91 84601 04757]",
+    "Tailored_Business_Outreach_Message": "Hi Dhaval,\n\nWe specialize in custom software for CA firms in Delhi to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-060",
+    "Name": "Pradeep Kain",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 98711 03006",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi",
+    "Full_Address": "Delhi",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delhi CA delegate met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 1:52 pm [+91 84601 04757]",
+    "Tailored_Business_Outreach_Message": "Hi Pradeep,\n\nWe build custom, private practice management software for CA firms in Delhi—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-061",
+    "Name": "Rohit Misra",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 93506 20355",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 1:53 pm [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi Rohit,\n\nWe develop tailored workflow software for CA practices in Delhi NCR to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-062",
+    "Name": "Suresh",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 98661 79985",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Hyderabad / South India",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 2:00 pm [+91 70698 58458]",
+    "Tailored_Business_Outreach_Message": "Hi Suresh,\n\nMost generic CA software is either overly rigid or charges recurring fees per user. We build custom practice management platforms tailored directly to your firm's internal workflow—giving partners complete visibility over staff tasks and unbilled work.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-063",
+    "Name": "Kunal Raman",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 95891 58669",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Madhya Pradesh / Central India",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Connected with Manav Rathod at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 2:11 pm [Manav Rathod]",
+    "Tailored_Business_Outreach_Message": "Hi Kunal,\n\nWe specialize in custom software for CA firms in Madhya Pradesh to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-064",
+    "Name": "Rishabh Jain",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 99771 37320",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Raipur, Chhattisgarh",
+    "Full_Address": "Raipur, Chhattisgarh",
+    "Category": "Chartered Accountant / Regional Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate from Raipur met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 2:34 pm [+91 84601 04757]",
+    "Tailored_Business_Outreach_Message": "Hi Rishabh,\n\nWe build custom, private practice management software for CA firms in Raipur, Chhattisgarh—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-065",
+    "Name": "CA Divyan Parmar",
+    "CA_Membership_No": "CA",
+    "Prefix_Designation": "CA / Practice Lead",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 99042 48324",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Gujarat",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 2:39 pm [+91 70698 58458]",
+    "Tailored_Business_Outreach_Message": "Hi CA Divyan,\n\nWe develop tailored workflow software for CA practices in Gujarat to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-066",
+    "Name": "Amin",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 93271 40130",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Baroda (Vadodara), Gujarat",
+    "Full_Address": "Baroda, Gujarat",
+    "Category": "Chartered Accountant / Regional Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate from Baroda met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 2:44 pm [+91 84601 04757]",
+    "Tailored_Business_Outreach_Message": "Hi Amin,\n\nMost generic CA software is either overly rigid or charges recurring fees per user. We build custom practice management platforms tailored directly to your firm's internal workflow—giving partners complete visibility over staff tasks and unbilled work.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-067",
+    "Name": "Shrivani",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 83698 21373",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Ahmedabad, Gujarat",
+    "Full_Address": "Ahmedabad, Gujarat",
+    "Category": "Chartered Accountant / Regional Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate from Ahmedabad met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 2:48 pm [+91 84601 04757]",
+    "Tailored_Business_Outreach_Message": "Hi Shrivani,\n\nWe specialize in custom software for CA firms in Ahmedabad, Gujarat to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-068",
+    "Name": "CA Piyush Goel",
+    "CA_Membership_No": "CA",
+    "Prefix_Designation": "CA / Partner",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 88600 13369",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi",
+    "Full_Address": "Delhi",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate from Delhi met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 3:17 pm [+91 84601 04757]",
+    "Tailored_Business_Outreach_Message": "Hi CA Piyush,\n\nWe build custom, private practice management software for CA firms in Delhi—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-069",
+    "Name": "Rahul",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 94685 33295",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Rajasthan",
+    "Full_Address": "Rajasthan",
+    "Category": "Chartered Accountant / Regional Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate from Rajasthan met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 3:25 pm [Rutvik Bhil]",
+    "Tailored_Business_Outreach_Message": "Hi Rahul,\n\nWe develop tailored workflow software for CA practices in Rajasthan to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-070",
+    "Name": "Ankit Mittal",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 99532 90345",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 3:30 pm [+91 70698 58458]",
+    "Tailored_Business_Outreach_Message": "Hi Ankit,\n\nMost generic CA software is either overly rigid or charges recurring fees per user. We build custom practice management platforms tailored directly to your firm's internal workflow—giving partners complete visibility over staff tasks and unbilled work.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-071",
+    "Name": "Raja Shah",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 94777 49997",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Kolkata / East India",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 3:31 pm [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi Raja,\n\nWe specialize in custom software for CA firms in Kolkata to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-072",
+    "Name": "Amey Dabke",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 95795 54342",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Nagpur, Maharashtra",
+    "Full_Address": "Nagpur, Maharashtra",
+    "Category": "Chartered Accountant / Regional Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate from Nagpur met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 3:33 pm [Rutvik Bhil]",
+    "Tailored_Business_Outreach_Message": "Hi Amey,\n\nWe build custom, private practice management software for CA firms in Nagpur, Maharashtra—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-073",
+    "Name": "CA Darshan",
+    "CA_Membership_No": "CA",
+    "Prefix_Designation": "CA / Practice Lead",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 89992 87144",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Maharashtra / Gujarat",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 3:37 pm [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi CA Darshan,\n\nWe develop tailored workflow software for CA practices in Maharashtra to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-074",
+    "Name": "Jatin Aggarwal",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 98698 02676",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR / Mumbai",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 3:41 pm [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi Jatin,\n\nMost generic CA software is either overly rigid or charges recurring fees per user. We build custom practice management platforms tailored directly to your firm's internal workflow—giving partners complete visibility over staff tasks and unbilled work.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-075",
+    "Name": "Pramod Kumar",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 88005 39993",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 3:44 pm [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi Pramod,\n\nWe specialize in custom software for CA firms in Delhi NCR to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-076",
+    "Name": "Pinkal Doshi",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 93775 10516",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Ahmedabad, Gujarat",
+    "Full_Address": "Ahmedabad, Gujarat",
+    "Category": "Chartered Accountant / Regional Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate from Ahmedabad met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 3:50 pm [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi Pinkal,\n\nWe build custom, private practice management software for CA firms in Ahmedabad, Gujarat—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-077",
+    "Name": "Narendra Kumar",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 95513 17474",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Chennai / South India",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 4:07 pm [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi Narendra,\n\nWe develop tailored workflow software for CA practices in Chennai to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-078",
+    "Name": "Khushgra",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 98706 61438",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR / Mumbai",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 4:09 pm [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi Khushgra,\n\nMost generic CA software is either overly rigid or charges recurring fees per user. We build custom practice management platforms tailored directly to your firm's internal workflow—giving partners complete visibility over staff tasks and unbilled work.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-079",
+    "Name": "Nidhi Jain",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 73045 88066",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Mumbai",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 4:18 pm [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi Nidhi,\n\nWe specialize in custom software for CA firms in Mumbai to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-080",
+    "Name": "Niraj Bapna",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 88110 27477",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Ahmedabad, Gujarat",
+    "Full_Address": "Ahmedabad, Gujarat",
+    "Category": "Chartered Accountant / Regional Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate from Ahmedabad met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 4:46 pm [+91 84601 04757]",
+    "Tailored_Business_Outreach_Message": "Hi Niraj,\n\nWe build custom, private practice management software for CA firms in Ahmedabad, Gujarat—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-081",
+    "Name": "Ravishankar Sharma",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 86559 59280",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Rajasthan",
+    "Full_Address": "Rajasthan",
+    "Category": "Chartered Accountant / Regional Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate from Rajasthan met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 4:55 pm [Rutvik Bhil]",
+    "Tailored_Business_Outreach_Message": "Hi Ravishankar,\n\nWe develop tailored workflow software for CA practices in Rajasthan to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-082",
+    "Name": "Parthojeeth",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 97415 11731",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Bengaluru, Karnataka",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 5:01 pm [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi Parthojeeth,\n\nMost generic CA software is either overly rigid or charges recurring fees per user. We build custom practice management platforms tailored directly to your firm's internal workflow—giving partners complete visibility over staff tasks and unbilled work.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-083",
+    "Name": "Himaatji Pradhan",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 98360 86862",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Kolkata / East India",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 5:01 pm [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi Himaat,\n\nWe specialize in custom software for CA firms in Kolkata to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-084",
+    "Name": "Karthik",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 95092 64338",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Rajasthan",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 5:37 pm [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi Karthik,\n\nWe build custom, private practice management software for CA firms in Rajasthan—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-085",
+    "Name": "CA Kuldip",
+    "CA_Membership_No": "CA",
+    "Prefix_Designation": "CA / Practice Lead",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 94786 00353",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Chandigarh, Punjab",
+    "Full_Address": "Chandigarh",
+    "Category": "Chartered Accountant / Regional Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate from Chandigarh met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 6:07 pm [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi CA Kuldip,\n\nWe develop tailored workflow software for CA practices in Chandigarh, Punjab to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-086",
+    "Name": "Anshul Agarwal",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 96393 81251",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Uttar Pradesh / NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 9:31 am [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi Anshul,\n\nMost generic CA software is either overly rigid or charges recurring fees per user. We build custom practice management platforms tailored directly to your firm's internal workflow—giving partners complete visibility over staff tasks and unbilled work.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-087",
+    "Name": "Saidulu",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 95050 60683",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Hyderabad / Telangana",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 9:32 am [+91 84601 04757]",
+    "Tailored_Business_Outreach_Message": "Hi Saidulu,\n\nWe specialize in custom software for CA firms in Hyderabad to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-088",
+    "Name": "Hiral Borade",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 93134 24775",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Mehsana, Gujarat",
+    "Full_Address": "Mehsana, Gujarat",
+    "Category": "Chartered Accountant / Regional Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate from Mehsana met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 9:54 am [+91 84601 04757]",
+    "Tailored_Business_Outreach_Message": "Hi Hiral,\n\nWe build custom, private practice management software for CA firms in Mehsana, Gujarat—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-089",
+    "Name": "Shailesh Gupta",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 94151 47337",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Uttar Pradesh / NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 9:55 am [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi Shailesh,\n\nWe develop tailored workflow software for CA practices in Uttar Pradesh to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-090",
+    "Name": "Ashutosh",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 92281 35700",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Surat, Gujarat",
+    "Full_Address": "Surat, Gujarat",
+    "Category": "Chartered Accountant / Regional Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate from Surat met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 10:00 am [+91 84601 04757]",
+    "Tailored_Business_Outreach_Message": "Hi Ashutosh,\n\nMost generic CA software is either overly rigid or charges recurring fees per user. We build custom practice management platforms tailored directly to your firm's internal workflow—giving partners complete visibility over staff tasks and unbilled work.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-091",
+    "Name": "Anish Kaul",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 91035 12354",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Jammu & Kashmir / Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 10:01 am [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi Anish,\n\nWe specialize in custom software for CA firms in Jammu & Kashmir to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-092",
+    "Name": "Kanishka Ma'am",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 78893 43039",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "India",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 10:06 am [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi Kanishka,\n\nWe build custom, private practice management software for CA firms—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-093",
+    "Name": "Ashish Trivedi",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Practice Lead",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 76008 21687",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Ahmedabad, Gujarat",
+    "Full_Address": "Ahmedabad, Gujarat",
+    "Category": "Chartered Accountant / Regional Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate from Ahmedabad met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 10:10 am [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi Ashish,\n\nWe develop tailored workflow software for CA practices in Ahmedabad, Gujarat to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-094",
+    "Name": "Varun Sharma",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 98995 09864",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 10:19 am [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi Varun,\n\nMost generic CA software is either overly rigid or charges recurring fees per user. We build custom practice management platforms tailored directly to your firm's internal workflow—giving partners complete visibility over staff tasks and unbilled work.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-095",
+    "Name": "Mukundan",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 98410 47064",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Chennai, Tamil Nadu",
+    "Full_Address": "Chennai, Tamil Nadu",
+    "Category": "Chartered Accountant / Regional Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate from Chennai met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 10:28 am [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi Mukundan,\n\nWe specialize in custom software for CA firms in Chennai, Tamil Nadu to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-096",
+    "Name": "Vinil Patel",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 90996 22888",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Ahmedabad, Gujarat",
+    "Full_Address": "Ahmedabad, Gujarat",
+    "Category": "Chartered Accountant / Regional Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate from Ahmedabad met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 10:31 am [+91 84601 04757]",
+    "Tailored_Business_Outreach_Message": "Hi Vinil,\n\nWe build custom, private practice management software for CA firms in Ahmedabad, Gujarat—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-097",
+    "Name": "N P S Chauhan",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 99581 19171",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi",
+    "Full_Address": "Delhi",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delhi CA delegate met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 10:35 am [+91 84601 04757]",
+    "Tailored_Business_Outreach_Message": "Hi N,\n\nWe develop tailored workflow software for CA practices in Delhi to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-098",
+    "Name": "Shubham Bhai",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 95996 36509",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 10:54 am [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi Shubham,\n\nMost generic CA software is either overly rigid or charges recurring fees per user. We build custom practice management platforms tailored directly to your firm's internal workflow—giving partners complete visibility over staff tasks and unbilled work.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-099",
+    "Name": "Ankit (Jaipur)",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 88249 77394",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Jaipur, Rajasthan",
+    "Full_Address": "Jaipur, Rajasthan",
+    "Category": "Chartered Accountant / Regional Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate from Jaipur met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 10:57 am [+91 84601 04757]",
+    "Tailored_Business_Outreach_Message": "Hi Ankit,\n\nWe specialize in custom software for CA firms in Jaipur, Rajasthan to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-100",
+    "Name": "CA Amit Gupta",
+    "CA_Membership_No": "CA",
+    "Prefix_Designation": "CA / Practice Lead",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 98711 03612",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 11:16 am [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi CA Amit,\n\nWe build custom, private practice management software for CA firms in Delhi NCR—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-101",
+    "Name": "Altmush",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 99199 66785",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Uttar Pradesh",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 11:19 am [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi Altmush,\n\nWe develop tailored workflow software for CA practices in Uttar Pradesh to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-102",
+    "Name": "Harsh Shah",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 94296 68764",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Anand, Gujarat",
+    "Full_Address": "Anand, Gujarat",
+    "Category": "Chartered Accountant / Regional Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate from Anand met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 11:29 am [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi Harsh,\n\nMost generic CA software is either overly rigid or charges recurring fees per user. We build custom practice management platforms tailored directly to your firm's internal workflow—giving partners complete visibility over staff tasks and unbilled work.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-103",
+    "Name": "CA Tarun Uddhar",
+    "CA_Membership_No": "CA",
+    "Prefix_Designation": "CA / Practice Lead",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 85443 22590",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Bihar / Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 12:11 pm [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi CA Tarun,\n\nWe specialize in custom software for CA firms in Bihar to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-104",
+    "Name": "S P Tyagi",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 81304 99587",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 12:14 pm [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi S,\n\nWe build custom, private practice management software for CA firms in Delhi NCR—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-105",
+    "Name": "Varun",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 84476 55068",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 12:27 pm [+91 70698 58458]",
+    "Tailored_Business_Outreach_Message": "Hi Varun,\n\nWe develop tailored workflow software for CA practices in Delhi NCR to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-106",
+    "Name": "Pratik",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 99099 26501",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Gujarat",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 12:29 pm [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi Pratik,\n\nMost generic CA software is either overly rigid or charges recurring fees per user. We build custom practice management platforms tailored directly to your firm's internal workflow—giving partners complete visibility over staff tasks and unbilled work.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-107",
+    "Name": "P K Saini",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 92120 42729",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Gurugram (Gurgaon), Haryana",
+    "Full_Address": "Gurugram, Haryana",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate from Gurugram met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 12:32 pm [+91 84601 04757]",
+    "Tailored_Business_Outreach_Message": "Hi P,\n\nWe specialize in custom software for CA firms in Gurugram (Gurgaon), Haryana to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-108",
+    "Name": "Ritik Gupta",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 96437 91668",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 12:46 pm [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi Ritik,\n\nWe build custom, private practice management software for CA firms in Delhi NCR—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-109",
+    "Name": "Ravi Chandran",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 94430 76919",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Tamil Nadu / South India",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 1:07 pm [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi Ravi,\n\nWe develop tailored workflow software for CA practices in Tamil Nadu to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-110",
+    "Name": "CA Neha",
+    "CA_Membership_No": "CA",
+    "Prefix_Designation": "CA / Practice Lead",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 83750 17992",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 1:28 pm [+91 70698 58458]",
+    "Tailored_Business_Outreach_Message": "Hi CA Neha,\n\nMost generic CA software is either overly rigid or charges recurring fees per user. We build custom practice management platforms tailored directly to your firm's internal workflow—giving partners complete visibility over staff tasks and unbilled work.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-111",
+    "Name": "Shishir Jayswal",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 97218 33491",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Uttar Pradesh",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 1:43 pm [Danish Memon]",
+    "Tailored_Business_Outreach_Message": "Hi Shishir,\n\nWe specialize in custom software for CA firms in Uttar Pradesh to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-112",
+    "Name": "CA Ankur",
+    "CA_Membership_No": "CA",
+    "Prefix_Designation": "CA / Practice Lead",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 98911 49008",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 1:54 pm [+91 70698 58458]",
+    "Tailored_Business_Outreach_Message": "Hi CA Ankur,\n\nWe build custom, private practice management software for CA firms in Delhi NCR—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-113",
+    "Name": "CA Sandeep",
+    "CA_Membership_No": "CA",
+    "Prefix_Designation": "CA / Practice Lead",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 97277 71492",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Ahmedabad, Gujarat",
+    "Full_Address": "Ahmedabad, Gujarat",
+    "Category": "Chartered Accountant / Regional Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate from Ahmedabad met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 2:36 pm [+91 84601 04757]",
+    "Tailored_Business_Outreach_Message": "Hi CA Sandeep,\n\nWe develop tailored workflow software for CA practices in Ahmedabad, Gujarat to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-114",
+    "Name": "Pankaj Chaubey",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 95322 22848",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Lucknow, Uttar Pradesh",
+    "Full_Address": "Lucknow, Uttar Pradesh",
+    "Category": "Chartered Accountant / Regional Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate from Lucknow met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 3:02 pm [+91 84601 04757]",
+    "Tailored_Business_Outreach_Message": "Hi Pankaj,\n\nMost generic CA software is either overly rigid or charges recurring fees per user. We build custom practice management platforms tailored directly to your firm's internal workflow—giving partners complete visibility over staff tasks and unbilled work.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-115",
+    "Name": "Manish Bansal",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 99689 90100",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 3:34 pm [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi Manish,\n\nWe specialize in custom software for CA firms in Delhi NCR to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-116",
+    "Name": "John Anthony",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 72000 83387",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Chennai / South India",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 4:27 pm [Hiren Maru]",
+    "Tailored_Business_Outreach_Message": "Hi John,\n\nWe build custom, private practice management software for CA firms in Chennai—engineered to automate client document collection, eliminate spreadsheet tracking, and stop billing leakage without recurring per-seat fees.\n\nWould you be open to a brief 5-minute call this week to see how this could streamline your practice?"
+  },
+  {
+    "Lead_ID": "LEAD-117",
+    "Name": "Pratik Aanand",
+    "CA_Membership_No": "CA / Professional",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 99531 99493",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Delegate met at ICAI AIS Summit 2026.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 4:42 pm [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hi Pratik,\n\nWe develop tailored workflow software for CA practices in Delhi NCR to organize team task delegation, prevent missed compliance deadlines, and automate client WhatsApp reminders.\n\nCould we schedule a quick 5-minute demo this week at your convenience?"
+  },
+  {
+    "Lead_ID": "LEAD-118",
+    "Name": "CA Rishabh",
+    "CA_Membership_No": "CA",
+    "Prefix_Designation": "CA / Practice Lead",
+    "Firm_Company_Name": "Chartered Accountants Practice",
+    "Phone_Number": "+91 72060 16891",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi",
+    "Full_Address": "Delhi",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "CA delegate from Delhi met at summit.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 5:22 pm [+91 84601 04757]",
+    "Tailored_Business_Outreach_Message": "Hi CA Rishabh,\n\nMost generic CA software is either overly rigid or charges recurring fees per user. We build custom practice management platforms tailored directly to your firm's internal workflow—giving partners complete visibility over staff tasks and unbilled work.\n\nWould you be open to a brief 5-minute chat this week?"
+  },
+  {
+    "Lead_ID": "LEAD-119",
+    "Name": "Delegate Lead (86024 66164)",
+    "CA_Membership_No": "CA / Delegate",
+    "Prefix_Designation": "CA / Delegate",
+    "Firm_Company_Name": "Chartered Accountants Firm",
+    "Phone_Number": "+91 86024 66164",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Madhya Pradesh / Central India",
+    "Full_Address": "",
+    "Category": "Chartered Accountant / CA Firm",
+    "Lead_Priority": "Medium",
+    "Key_Requirements_And_Context": "Connected at summit stall.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 27/06/2026, 4:16 pm [+91 93764 94394]",
+    "Tailored_Business_Outreach_Message": "Hello,\n\nWe specialize in custom software for CA firms in Madhya Pradesh to streamline GST, ITR, and audit task pipelines while automating client document follow-ups.\n\nWhen would be a convenient time for a brief 5-minute introductory walkthrough this week?"
+  },
+  {
+    "Lead_ID": "LEAD-120",
+    "Name": "Channel Partner (Zoho / Tally / KDK)",
+    "CA_Membership_No": "Channel Partner",
+    "Prefix_Designation": "Software Distributor / Partner",
+    "Firm_Company_Name": "IT Software Distributorship (Zoho, Tally, KDK Partner)",
+    "Phone_Number": "Inquiry via Summit Stall",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "India",
+    "Full_Address": "",
+    "Category": "Software Distributorship & Channel Partner",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Explicitly noted in chat: 'zoho tally kdk partner / wants to take distributorship'. Wants to distribute Simplifyte / CA software to their existing network of CA and accounting clients.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 4:40 pm [+91 84601 04757]",
+    "Tailored_Business_Outreach_Message": "Hi Team,\n\nGiven your software distribution network across Zoho, Tally, and KDK, our custom CA practice management platforms offer a high-margin solution for accounting practices.\n\nLet us know if you are open to a brief introductory call this week to explore partnership synergies."
+  },
+  {
+    "Lead_ID": "LEAD-121",
+    "Name": "Enterprise Firm (250+ Employees)",
+    "CA_Membership_No": "Enterprise Firm",
+    "Prefix_Designation": "Managing Partner / Enterprise Lead",
+    "Firm_Company_Name": "Large Professional Accounting Firm (250+ Team)",
+    "Phone_Number": "Connected at Stall",
+    "Alternative_Phone": "",
+    "Email": "",
+    "Website": "",
+    "City_Location": "Delhi NCR / India",
+    "Full_Address": "",
+    "Category": "Mega Enterprise CA Firm (250+ Staff)",
+    "Lead_Priority": "High",
+    "Key_Requirements_And_Context": "Explicitly noted in chat: 'Interested / Team size 250+ employee'. Needs custom enterprise architecture, workload balancing, and multi-department controls.",
+    "Lead_Source": "WhatsApp Chat Lead",
+    "Reference_File_Or_Message": "WhatsApp Chat: 26/06/2026, 12:47 pm [Danish Memon]",
+    "Tailored_Business_Outreach_Message": "Hello Managing Partner,\n\nFor large professional accounting firms of 250+ staff, we engineer custom enterprise practice platforms with role-based departmental controls, workload balancing, and automated compliance pipelines to eliminate administrative overhead.\n\nCould we arrange an introductory demonstration for your executive committee this week?"
+  }
+];
+</script>
+  <script>
+    let leadStatus = JSON.parse(localStorage.getItem('ca_outreach_status') || '{}');
+
+    function saveStatus(leadId, status) {
+      leadStatus[leadId] = status;
+      localStorage.setItem('ca_outreach_status', JSON.stringify(leadStatus));
+      renderStats();
+      const card = document.getElementById(`card-${leadId}`);
+      if (card) {
+        card.className = `lead-card ${status === 'Sent' ? 'status-sent' : ''}`;
+      }
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.innerText = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2000);
+    }
+
+    function copyText(text) {
+      navigator.clipboard.writeText(text);
+      showToast('📋 Message copied to clipboard!');
+    }
+
+    function renderStats() {
+      const total = leads.length;
+      let high = 0;
+      let sent = 0;
+
+      leads.forEach(l => {
+        if (l.Lead_Priority === 'High') high++;
+        if (leadStatus[l.Lead_ID] === 'Sent') sent++;
+      });
+
+      document.getElementById('total-count').innerText = total;
+      document.getElementById('high-count').innerText = high;
+      document.getElementById('sent-count').innerText = sent;
+      document.getElementById('pending-count').innerText = total - sent;
+    }
+
+    function cleanPhone(raw) {
+      if (!raw) return null;
+      let digits = raw.replace(/[^0-9+]/g, '');
+      if (!digits) return null;
+      if (digits.startsWith('+')) digits = digits.substring(1);
+      else if (digits.length === 10) digits = '91' + digits;
+      else if (digits.length === 11 && digits.startsWith('0')) digits = '91' + digits.substring(1);
+      return digits.length >= 10 ? digits : null;
+    }
+
+    function renderCards(list) {
+      const grid = document.getElementById('leadsGrid');
+      grid.innerHTML = '';
+
+      list.forEach(lead => {
+        const id = lead.Lead_ID;
+        const currentStatus = leadStatus[id] || 'Pending';
+        const cleanedPhone = cleanPhone(lead.Phone_Number);
+        const hasPhone = Boolean(cleanedPhone);
+        const encodedMsg = encodeURIComponent(lead.Tailored_Business_Outreach_Message || '');
+        const waLink = hasPhone ? `https://api.whatsapp.com/send?phone=${cleanedPhone}&text=${encodedMsg}` : '#';
+
+        const card = document.createElement('div');
+        card.id = `card-${id}`;
+        card.className = `lead-card ${currentStatus === 'Sent' ? 'status-sent' : ''}`;
+
+        card.innerHTML = `
+          <div>
+            <div class="lead-header">
+              <div>
+                <span class="lead-id">${lead.Lead_ID}</span>
+                <div class="lead-name">${escapeHtml(lead.Name)}</div>
+                <div class="lead-designation">${escapeHtml(lead.Prefix_Designation || 'CA Professional')}</div>
+              </div>
+              <span class="priority-tag priority-${lead.Lead_Priority}">${lead.Lead_Priority}</span>
+            </div>
+
+            <div class="lead-details">
+              ${lead.Firm_Company_Name ? `<div class="detail-row"><span class="detail-icon">🏢</span> <strong>${escapeHtml(lead.Firm_Company_Name)}</strong></div>` : ''}
+              <div class="detail-row"><span class="detail-icon">📍</span> ${escapeHtml(lead.City_Location || 'India')}</div>
+              <div class="detail-row"><span class="detail-icon">📞</span> ${escapeHtml(lead.Phone_Number || 'No Phone')}</div>
+              ${lead.Email ? `<div class="detail-row"><span class="detail-icon">✉️</span> ${escapeHtml(lead.Email)}</div>` : ''}
+            </div>
+
+            ${lead.Key_Requirements_And_Context ? `<div class="context-box"><strong>Context:</strong> ${escapeHtml(lead.Key_Requirements_And_Context)}</div>` : ''}
+
+            <div class="message-box">${escapeHtml(lead.Tailored_Business_Outreach_Message || '')}</div>
+          </div>
+
+          <div class="card-actions">
+            ${hasPhone ? `
+              <a href="${waLink}" target="_blank" class="btn-wa" onclick="markSent('${id}')">
+                <span>💬 WhatsApp</span>
+              </a>
+            ` : `
+              <span class="btn-wa disabled">No Phone</span>
+            `}
+
+            <button class="btn-copy" id="btn-copy-${id}">📋 Copy</button>
+
+            <select class="status-select" onchange="saveStatus('${id}', this.value)">
+              <option value="Pending" ${currentStatus === 'Pending' ? 'selected' : ''}>⏳ Pending</option>
+              <option value="Sent" ${currentStatus === 'Sent' ? 'selected' : ''}>✅ Sent</option>
+              <option value="Interested" ${currentStatus === 'Interested' ? 'selected' : ''}>🔥 Interested</option>
+              <option value="Follow-Up" ${currentStatus === 'Follow-Up' ? 'selected' : ''}>🔄 Follow-Up</option>
+            </select>
+          </div>
+        `;
+
+        grid.appendChild(card);
+
+        // Attach event listener for copy
+        document.getElementById(`btn-copy-${id}`).addEventListener('click', () => {
+          copyText(lead.Tailored_Business_Outreach_Message || '');
+        });
+      });
+    }
+
+    function markSent(leadId) {
+      const select = document.querySelector(`#card-${leadId} .status-select`);
+      if (select && select.value === 'Pending') {
+        select.value = 'Sent';
+        saveStatus(leadId, 'Sent');
+      }
+    }
+
+    function filterCards() {
+      const q = document.getElementById('searchInput').value.toLowerCase().trim();
+      const priority = document.getElementById('priorityFilter').value;
+      const status = document.getElementById('statusFilter').value;
+
+      const filtered = leads.filter(l => {
+        const id = l.Lead_ID;
+        const currStatus = leadStatus[id] || 'Pending';
+
+        const matchesQuery = !q ||
+          l.Name.toLowerCase().includes(q) ||
+          (l.Firm_Company_Name && l.Firm_Company_Name.toLowerCase().includes(q)) ||
+          (l.City_Location && l.City_Location.toLowerCase().includes(q)) ||
+          l.Lead_ID.toLowerCase().includes(q) ||
+          (l.Phone_Number && l.Phone_Number.toLowerCase().includes(q));
+
+        const matchesPriority = priority === 'ALL' || l.Lead_Priority === priority;
+        const matchesStatus = status === 'ALL' || currStatus === status;
+
+        return matchesQuery && matchesPriority && matchesStatus;
+      });
+
+      renderCards(filtered);
+    }
+
+    function resetFilters() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('priorityFilter').value = 'ALL';
+      document.getElementById('statusFilter').value = 'ALL';
+      renderCards(leads);
+    }
+
+    function escapeHtml(unsafe) {
+      if (!unsafe) return '';
+      return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function exportUpdatedCSV() {
+      let csvContent = "data:text/csv;charset=utf-8,";
+      const keys = Object.keys(leads[0]);
+      const headers = [...keys, "Outreach_Status"];
+      csvContent += headers.join(",") + "\n";
+
+      leads.forEach(l => {
+        const row = keys.map(k => '"' + (l[k] || "").replace(/"/g, '""') + '"');
+        row.push('"' + (leadStatus[l.Lead_ID] || "Pending") + '"');
+        csvContent += row.join(",") + "\n";
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `CA_Outreach_Status_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Initial render
+    renderStats();
+    renderCards(leads);
+  </script>
+</body>
+</html>
