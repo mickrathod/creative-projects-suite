@@ -30,10 +30,13 @@ venv/
 # Browser & session profiles (contain cookies / private auth)
 whatsapp_profile/
 **/whatsapp_profile/
+whatsapp_session/
+**/whatsapp_session/
 browser_profile/
 **/browser_profile/
 sent_whatsapp_history.json
 **/sent_whatsapp_history.json
+*.zip
 
 # Operating System & IDE
 .DS_Store
@@ -42,6 +45,9 @@ Thumbs.db
 **/.vscode/
 .idea/
 **/.idea/
+.claude/
+**/.claude/
 .system_generated/
 **/.system_generated/
 scratch/
+

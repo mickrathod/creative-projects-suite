@@ -1,0 +1,110 @@
+export const PARTNER_GARAGES = [
+  {
+    id: 'garage-1',
+    name: 'Shree Ram Auto Workshop',
+    gujaratiName: 'શ્રી રામ ઓટો વર્કશોપ',
+    owner: 'Gopalbhai Prajapati',
+    locality: 'Chitra GIDC (Near Industrial Gate 2)',
+    specialty: 'Engine Overhaul, Gearbox Rebuild, Chassis Alignment',
+    phone: '+91 98251 44102',
+    rating: 4.8,
+    activeBays: 4,
+    occupiedBays: 3,
+    activeJobsCount: 3,
+    totalCompletedJobs: 184,
+    commissionRate: '15% Platform Referral'
+  },
+  {
+    id: 'garage-2',
+    name: 'Mahadev Two-Wheeler Care',
+    gujaratiName: 'મહાદેવ ટૂ-વ્હીલર કેર',
+    owner: 'Kishorebhai Gohil',
+    locality: 'Ghogha Circle (Near Dairy Road)',
+    specialty: 'Electrical Harness, Fuel Injection (FI) Diagnostics, Suspension',
+    phone: '+91 97240 88319',
+    rating: 4.9,
+    activeBays: 3,
+    occupiedBays: 1,
+    activeJobsCount: 1,
+    totalCompletedJobs: 142,
+    commissionRate: '15% Platform Referral'
+  },
+  {
+    id: 'garage-3',
+    name: 'Chamunda Motors & Denting',
+    gujaratiName: 'ચામુંડા મોટર્સ એન્ડ ડેન્ટિંગ',
+    owner: 'Mansukhbhai Rathod',
+    locality: 'Kaliyabid / Sidsar Road',
+    specialty: 'Accident Repair, Denting & Painting, Fork Straightening',
+    phone: '+91 99041 55201',
+    rating: 4.7,
+    activeBays: 5,
+    occupiedBays: 4,
+    activeJobsCount: 2,
+    totalCompletedJobs: 98,
+    commissionRate: '15% Platform Referral'
+  }
+];
+
+export const WORKSHOP_REFERRED_JOBS = [
+  {
+    id: 'WS-8831',
+    customerName: 'Ketan Trivedi',
+    customerPhone: '+91 94262 XXXXX',
+    vehicle: 'Honda Activa 5G (Grey)',
+    regNo: 'GJ-04-CM-4819',
+    referralDate: '2026-09-13',
+    referredByMechanic: 'Ramesh Vaghela (Mobile Tech)',
+    assignedGarage: 'Shree Ram Auto Workshop',
+    garageId: 'garage-1',
+    issueDescription: 'Piston seizure & white smoke. Crankshaft bearing noise. Cannot be repaired on roadside.',
+    status: 'IN_REPAIR', // ESTIMATE_PENDING, APPROVED, IN_REPAIR, READY, DELIVERED
+    partsEstimate: 3450,
+    labourEstimate: 1200,
+    totalBill: 4650,
+    platformFee: 697, // 15%
+    garagePayout: 3953,
+    bayNumber: 'Bay #2',
+    estCompletion: 'Tomorrow, 5:00 PM'
+  },
+  {
+    id: 'WS-8840',
+    customerName: 'Yogesh Dave',
+    customerPhone: '+91 98242 XXXXX',
+    vehicle: 'Bajaj Pulsar 150 NS',
+    regNo: 'GJ-04-BQ-9102',
+    referralDate: '2026-09-14',
+    referredByMechanic: 'Haresh Solanki (Night Tech)',
+    assignedGarage: 'Mahadev Two-Wheeler Care',
+    garageId: 'garage-2',
+    issueDescription: 'Total electrical wiring harness burnout after monsoon waterlogging near Nari Chokdi.',
+    status: 'ESTIMATE_PENDING',
+    partsEstimate: 1850,
+    labourEstimate: 850,
+    totalBill: 2700,
+    platformFee: 405,
+    garagePayout: 2295,
+    bayNumber: 'Bay #1',
+    estCompletion: 'Pending Customer Approval'
+  },
+  {
+    id: 'WS-8799',
+    customerName: 'Alkesh Parmar',
+    customerPhone: '+91 99090 XXXXX',
+    vehicle: 'Royal Enfield Classic 350',
+    regNo: 'GJ-04-DL-1120',
+    referralDate: '2026-09-12',
+    referredByMechanic: 'Paresh Parmar',
+    assignedGarage: 'Chamunda Motors & Denting',
+    garageId: 'garage-3',
+    issueDescription: 'Front fork bent & mudguard damaged after pothole hit on Ghogha bypass.',
+    status: 'READY',
+    partsEstimate: 2100,
+    labourEstimate: 1400,
+    totalBill: 3500,
+    platformFee: 525,
+    garagePayout: 2975,
+    bayNumber: 'Bay #4',
+    estCompletion: 'Ready for Customer Pickup'
+  }
+];

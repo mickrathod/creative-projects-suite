@@ -1,0 +1,20 @@
+Timestamp,Lead_ID,Name,Phone,Status,Note
+2026-09-12 13:56:59,LEAD-120,Channel Partner (Zoho / Tally / KDK),Inquiry via Summit Stall,SKIPPED_NO_PHONE,Missing or invalid phone number format
+2026-09-12 13:56:59,LEAD-121,Enterprise Firm (250+ Employees),Connected at Stall,SKIPPED_NO_PHONE,Missing or invalid phone number format
+2026-09-12 14:02:17,LEAD-120,Channel Partner (Zoho / Tally / KDK),Inquiry via Summit Stall,SKIPPED_NO_PHONE,Missing or invalid phone number format
+2026-09-12 14:02:17,LEAD-121,Enterprise Firm (250+ Employees),Connected at Stall,SKIPPED_NO_PHONE,Missing or invalid phone number format
+2026-09-12 14:04:25,LEAD-120,Channel Partner (Zoho / Tally / KDK),Inquiry via Summit Stall,SKIPPED_NO_PHONE,Missing or invalid phone number format
+2026-09-12 14:04:25,LEAD-121,Enterprise Firm (250+ Employees),Connected at Stall,SKIPPED_NO_PHONE,Missing or invalid phone number format
+2026-09-12 14:07:16,LEAD-120,Channel Partner (Zoho / Tally / KDK),Inquiry via Summit Stall,SKIPPED_NO_PHONE,Missing or invalid phone number format
+2026-09-12 14:07:16,LEAD-121,Enterprise Firm (250+ Employees),Connected at Stall,SKIPPED_NO_PHONE,Missing or invalid phone number format
+2026-09-12 14:50:05,LEAD-120,Channel Partner (Zoho / Tally / KDK),Inquiry via Summit Stall,SKIPPED_NO_PHONE,Missing or invalid phone number format
+2026-09-12 14:50:05,LEAD-121,Enterprise Firm (250+ Employees),Connected at Stall,SKIPPED_NO_PHONE,Missing or invalid phone number format
+2026-09-12 14:50:36,LEAD-120,Channel Partner (Zoho / Tally / KDK),Inquiry via Summit Stall,SKIPPED_NO_PHONE,Missing or invalid phone number format
+2026-09-12 14:50:36,LEAD-121,Enterprise Firm (250+ Employees),Connected at Stall,SKIPPED_NO_PHONE,Missing or invalid phone number format
+2026-09-12 14:51:15,LEAD-001,CA Nitish Khaitan,919968833037,FAILED,"Page.wait_for_selector: Target page, context or browser has been closed
+Call log:
+  - waiting for locator(""footer div[co"
+2026-09-12 14:51:20,LEAD-002,CA Yogesh Sovani,919820080397,FAILED,"Page.goto: Target page, context or browser has been closed"
+2026-09-12 14:51:25,LEAD-003,CA Pushkar Patil,919820602079,FAILED,"Page.goto: Target page, context or browser has been closed"
+2026-09-12 14:51:30,LEAD-004,Vijay Kumar,918053029991,FAILED,"Page.goto: Target page, context or browser has been closed"
+2026-09-12 14:51:35,LEAD-005,Abhimanyu Chhapolia,919880089889,FAILED,"Page.goto: Target page, context or browser has been closed"
